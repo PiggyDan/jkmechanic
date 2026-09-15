@@ -1,0 +1,71 @@
+:root {
+  font-family: Inter, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #e2e8f0;
+  background:
+    radial-gradient(circle at top, rgba(249, 115, 22, 0.18), transparent 32%),
+    linear-gradient(180deg, #020817 0%, #0f172a 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: transparent;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+:root {
+  --heading: #f8fafc;
+  --text: #e2e8f0;
+  --muted: #b4c0d2;
+  --gold: #fbbf24;
+  --surface: rgba(9, 14, 22, .8);
+  --card: #0f172a;
+  --field: #111c30;
+  --shadow: rgba(2, 6, 23, .42);
+}
+:root[data-theme='light'] {
+  --heading: #182235;
+  --text: #263449;
+  --muted: #526078;
+  --gold: #985000;
+  --surface: rgba(255, 255, 255, .92);
+  --card: #f3f5f8;
+  --field: #fff;
+  --shadow: rgba(36, 48, 68, .08);
+  color: var(--text);
+  background: radial-gradient(circle at top, #ffedd5, transparent 36%), #f5f6f8;
+}

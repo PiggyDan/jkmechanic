@@ -1,0 +1,24 @@
+import Link from 'next/link';
+import { ArrowRight, CalendarDays, Check, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import Header from '../components/Header';
+import GooglePlace from '../components/GooglePlace';
+import GoogleGallery from '../components/GoogleGallery';
+import GoogleReviews from '../components/GoogleReviews';
+import AppointmentForm from '../components/AppointmentForm';
+import { services } from '../lib/services';
+
+const MAPS='https://maps.app.goo.gl/C2Ha1iWXSn9vTjPq5?g_st=ic';
+export default function Home(){return <main><Header/>
+<section className="hero wrap"><div className="hero-copy"><div className="eyebrow">GACHUURT · ULAANBAATAR · GARAGE 84</div><h1>One place for the vehicle jobs that normally take five phone calls.</h1><p>Repair it. Inspect it before you buy. Find the right vehicle. Sell one on consignment. Source parts. Sort the paperwork. Rent a Musso. JK Mongolia handles the practical side of keeping a vehicle moving.</p><div className="hero-actions"><a className="primary-btn" href="#appointment"><CalendarDays size={18}/> Book an appointment</a><a className="secondary-btn" href="#services">See our services <ArrowRight size={17}/></a></div><div className="trust-row"><div><strong>20+</strong><span>years in Mongolia's auto industry</span></div><div><strong>5.0</strong><span>Google rating · 10 reviews</span></div><div><strong>4x4</strong><span>strong diesel SUV experience</span></div></div></div><GooglePlace mode="hero"/></section>
+
+<section id="services" className="services-modern"><div className="wrap"><div className="section-top"><div><div className="section-kicker">What we do</div><h2>Choose the job.<br/>See exactly what it includes.</h2></div><p>Each service now has its own page. No more endless accordion list and no vague dealership wording.</p></div><div className="service-grid">{services.map((s)=><Link className="service-card" href={`/services/${s.slug}`} key={s.slug}><GooglePlace mode="single" photoIndex={s.photoIndex}/><div className="service-card-body"><span>{s.number}</span><h3>{s.title}</h3><p>{s.short}</p><b>View service <ArrowRight size={16}/></b></div></Link>)}</div></div></section>
+
+<section className="musso"><div className="wrap musso-grid"><div><div className="section-kicker light">Rental</div><h2>Musso only.<br/>On purpose.</h2></div><div><p>We keep the rental side intentionally simple. Musso 4x4s are straightforward, useful vehicles and they are maintained by the same workshop that rents them.</p><div className="checklist"><span><Check/> Tough off-road platform</span><span><Check/> Workshop maintained</span><span><Check/> Simple, proven technology</span></div><Link className="light-link" href="/services/musso-rental">Musso rental details <ArrowRight size={16}/></Link></div></div></section>
+
+<section id="reviews" className="google-proof"><div className="wrap"><GoogleGallery/><GoogleReviews/></div></section>
+
+<section id="about" className="about-modern"><div className="wrap about-grid"><div className="big-number">20</div><div><div className="section-kicker">Experience matters</div><h2>Vehicles are rarely as simple as the fault code.</h2><p>Twenty years around Mongolia's automotive industry means seeing the same problems in different forms: difficult cold starts, diesel systems, worn suspension, poor previous repairs, vehicles that look good online but drive badly in person, and parts that do not match what the seller promised.</p><p>JK Mongolia is built around practical judgment: diagnose first, explain clearly, and only then decide what should be repaired, replaced or left alone.</p></div></div></section>
+
+<section id="appointment" className="appointment"><div className="wrap appointment-grid"><div className="appointment-copy"><div className="section-kicker light">Book a visit</div><h2>Tell us about the vehicle before you arrive.</h2><p>Send the details once. Your appointment request goes directly to <b>jkmongolia@gmail.com</b>, and JK Mongolia can contact you to confirm the time.</p><div className="contact-stack"><a href="tel:+97688856529"><Phone/> <span><small>Call</small>+976 8885 6529</span></a><a href="mailto:jkmongolia@gmail.com"><Mail/> <span><small>Email</small>jkmongolia@gmail.com</span></a><a href={MAPS} target="_blank"><MapPin/> <span><small>Workshop</small>Garage 84 · Gachuurt</span></a>{process.env.NEXT_PUBLIC_MESSENGER_URL&&<a href={process.env.NEXT_PUBLIC_MESSENGER_URL} target="_blank"><MessageCircle/><span><small>Messenger</small>Message JK Mongolia</span></a>}</div></div><AppointmentForm/></div></section>
+<footer><div className="wrap footer"><div className="brand"><span>JK</span><b>JK MONGOLIA<small>Automotive Services</small></b></div><p>Independent automotive service · Gachuurt, Ulaanbaatar</p><a href="#top">Back to top ↑</a></div></footer>
+</main>}
