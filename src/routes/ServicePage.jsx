@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useCallback, useEffect, useState } from 'react'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { services } from '../data/services'
 import Header from '../components/Header'
+import { submitRequest } from '../lib/submitRequest'
+import AppointmentPicker from '../components/AppointmentPicker'
+import BuySellPage from './BuySellPage'
+import { servicePhoto } from '../data/brand'
 
 const t = {
   back: 'Back to home',
@@ -19,8 +23,7 @@ const t = {
   needServiceText: 'Tell us what you need and we’ll advise on the next step.',
 }
 
-function ServicePage() {
-  const { slug } = useParams()
+function ServicePage({ slug }) {
   const service = services.find((item) => item.slug === slug)
 
   const initialFormState = service?.formFields
@@ -28,12 +31,20 @@ function ServicePage() {
     : {}
 
   const [formData, setFormData] = useState(initialFormState)
+  const [status, setStatus] = useState({ state: 'idle', error: '' })
+  const [appointment, setAppointment] = useState(null)
+  const [appointmentError, setAppointmentError] = useState('')
+  const [availabilityKey, setAvailabilityKey] = useState(0)
+  const [pickerDown, setPickerDown] = useState(false)
+  const location = useLocation()
+  const handlePickerDown = useCallback(() => setPickerDown(true), [])
 
+  // Arriving from the booking picker (#booking) jumps straight to the form.
   useEffect(() => {
-    if (service?.formFields) {
-      setFormData(Object.fromEntries(service.formFields.map((field) => [field.name, ''])))
+    if (location.hash) {
+      document.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [service])
+  }, [location.key, location.hash])
 
   if (!service) {
     return (
@@ -55,66 +66,47 @@ function ServicePage() {
     setFormData((current) => ({ ...current, [name]: value }))
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-
-    const subject = encodeURIComponent(`Booking request - ${service.title}`)
-    const body = encodeURIComponent(
-      service.formFields
-        .map((field) => `${field.label}: ${formData[field.name] || 'N/A'}`)
-        .join('\n'),
-    )
-
-    const extraFields = service.slug === 'buy-sell-car'
-      ? service.formFields.length
-        ? ''
-        : ''
-      : ''
-
-    const buySellExtra = service.slug === 'buy-sell-car'
-      ? [
-          formData.goal === 'Buy a car'
-            ? [
-                `Type of car looking for: ${formData.lookingFor || 'N/A'}`,
-                `Budget: ${formData.budget || 'N/A'}`,
-              ]
-            : [
-                `Type of vehicle: ${formData.vehicleType || 'N/A'}`,
-                `Manufactured year: ${formData.manufacturedYear || 'N/A'}`,
-                `Imported year: ${formData.importedYear || 'N/A'}`,
-                `Price: ${formData.price || 'N/A'}`,
-                `Negotiating: ${formData.negotiating || 'N/A'}`,
-              ],
-        ].flat().join('\n')
-      : ''
-
-    const finalBody = encodeURIComponent(
-      [
-        service.formFields.map((field) => `${field.label}: ${formData[field.name] || 'N/A'}`).join('\n'),
-        buySellExtra,
-      ]
-        .filter(Boolean)
-        .join('\n\n'),
-    )
-
-    window.location.href = `mailto:jkmongolia@gmail.com?subject=${subject}&body=${finalBody}`
+  const chooseAppointment = (next) => {
+    setAppointment(next)
+    if (next) setAppointmentError('')
   }
 
-  const buySellFields =
-    service.slug === 'buy-sell-car'
-      ? formData.goal === 'Buy a car'
-        ? [
-            { name: 'lookingFor', label: 'What kind of car are you looking for?', type: 'text', placeholder: 'SUV, sedan, pickup, etc.', required: true },
-            { name: 'budget', label: 'Your budget', type: 'text', placeholder: 'e.g. 25,000,000 MNT', required: true },
-          ]
-        : [
-            { name: 'vehicleType', label: 'Type of vehicle', type: 'select', placeholder: 'Choose vehicle type', required: true, options: ['SUV', 'Sedan', 'Pickup truck', 'Van', 'Truck', 'Other'] },
-            { name: 'manufacturedYear', label: 'Manufactured year', type: 'text', placeholder: 'e.g. 2018', required: true },
-            { name: 'importedYear', label: 'Imported year', type: 'text', placeholder: 'e.g. 2020', required: true },
-            { name: 'price', label: 'Price', type: 'text', placeholder: 'e.g. 18,000,000 MNT', required: true },
-            { name: 'negotiating', label: 'Negotiating?', type: 'select', placeholder: 'Choose an option', required: true, options: ['Yes', 'No'] },
-          ]
-      : []
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    // The picker can only be skipped if it failed to load; then the notes carry the preferred time.
+    if (service.appointment === 'required' && !appointment && !pickerDown) {
+      setAppointmentError('Please choose a day and time.')
+      return
+    }
+    setStatus({ state: 'sending', error: '' })
+    const fields = service.formFields
+      .filter((field) => !['name', 'phone'].includes(field.name))
+      .map((field) => ({ label: field.label, value: formData[field.name] || '' }))
+    try {
+      await submitRequest({
+        name: formData.name,
+        phone: formData.phone,
+        service: service.title,
+        source: 'Service page',
+        website: formData.website,
+        fields,
+        appointment: appointment ?? undefined,
+      })
+      setFormData(Object.fromEntries(service.formFields.map((field) => [field.name, ''])))
+      setAppointment(null)
+      setStatus({ state: 'sent', error: '' })
+    } catch (error) {
+      if (error.field === 'appointment') {
+        // The time filled up meanwhile: show fresh availability and ask for another time.
+        setAppointment(null)
+        setAppointmentError(error.message)
+        setAvailabilityKey((key) => key + 1)
+        setStatus({ state: 'idle', error: '' })
+      } else {
+        setStatus({ state: 'error', error: error.message })
+      }
+    }
+  }
 
   return (
     <div className="service-detail-page">
@@ -133,7 +125,7 @@ function ServicePage() {
             <div className="detail-actions">
               <a
                 className="primary-button"
-                href={`mailto:jkmongolia@gmail.com?subject=${encodeURIComponent(`Service Inquiry - ${service.title}`)}`}
+                href="#booking"
               >
                 {t.enquire}
               </a>
@@ -144,7 +136,7 @@ function ServicePage() {
           </div>
 
           <div className="detail-image-wrap">
-            <img src={service.image} alt={service.title} />
+            <img src={servicePhoto(service)} alt={service.title} />
           </div>
         </section>
 
@@ -190,13 +182,22 @@ function ServicePage() {
           </div>
         </section>
 
-        <section className="booking-panel reveal">
+        <section id="booking" className="booking-panel reveal">
           <div className="booking-copy">
             <span className="eyebrow dark">{t.booking}</span>
             <h2>{service.formTitle}</h2>
             <p>{service.formIntro}</p>
           </div>
 
+          {status.state === 'sent' ? (
+            <div className="booking-form booking-done" role="status">
+              <h3>Request sent. Thank you!</h3>
+              <p>We will call you to confirm the details. For anything urgent, call +976 8885 6529.</p>
+              <button type="button" className="secondary-button" onClick={() => setStatus({ state: 'idle', error: '' })}>
+                Send another request
+              </button>
+            </div>
+          ) : (
           <form className="booking-form" onSubmit={handleSubmit}>
             {service.formFields.map((field) => (
               <label key={field.name}>
@@ -242,38 +243,25 @@ function ServicePage() {
               </label>
             ))}
 
-            {buySellFields.map((field) => (
-              <label key={field.name}>
-                <span>{field.label}</span>
-                {field.type === 'select' ? (
-                  <select
-                    name={field.name}
-                    value={formData[field.name] || ''}
-                    onChange={handleChange}
-                    required={field.required}
-                  >
-                    <option value="">{field.placeholder}</option>
-                    {field.options?.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <input
-                    type={field.type}
-                    name={field.name}
-                    value={formData[field.name] || ''}
-                    onChange={handleChange}
-                    placeholder={field.placeholder}
-                    required={field.required}
-                  />
-                )}
-              </label>
-            ))}
-
-            <button type="submit" className="primary-button form-button">{t.sendRequest}</button>
+            {service.appointment && (
+              <AppointmentPicker
+                value={appointment}
+                onChange={chooseAppointment}
+                optional={service.appointment === 'optional'}
+                reloadKey={availabilityKey}
+                error={appointmentError}
+                onUnavailable={handlePickerDown}
+              />
+            )}
+            <label className="booking-honeypot" aria-hidden="true">
+              Website <input name="website" value={formData.website || ''} onChange={handleChange} tabIndex={-1} autoComplete="off" />
+            </label>
+            {status.state === 'error' && <p className="booking-error" role="alert">{status.error}</p>}
+            <button type="submit" className="primary-button form-button" disabled={status.state === 'sending'}>
+              {status.state === 'sending' ? 'Sending…' : t.sendRequest}
+            </button>
           </form>
+          )}
         </section>
 
         <section className="detail-cta reveal">
@@ -283,7 +271,7 @@ function ServicePage() {
           </div>
           <a
             className="primary-button"
-            href={`mailto:jkmongolia@gmail.com?subject=${encodeURIComponent(`Service Inquiry - ${service.title}`)}`}
+            href="#booking"
           >
             {t.contact}
           </a>
@@ -293,4 +281,12 @@ function ServicePage() {
   )
 }
 
-export default ServicePage
+// Keyed by slug so the form state resets when moving between services.
+function ServicePageRoute() {
+  const { slug } = useParams()
+  // Buying/selling has its own page with pricing and a buy/sell form.
+  if (slug === 'buy-sell-car') return <BuySellPage key={slug} />
+  return <ServicePage key={slug} slug={slug} />
+}
+
+export default ServicePageRoute

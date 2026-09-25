@@ -27,3 +27,6 @@ out/
 *.njsproj
 *.sln
 *.sw?
+
+# Local dev data (bookings/chats saved by npm run dev)
+.local-data/

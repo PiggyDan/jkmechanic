@@ -1126,3 +1126,34 @@
   .header-actions { width: 100%; }
   .header-actions .pill-button { width: auto; flex: 1 1 auto; }
 }
+
+.about-copy h1 {
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+}
+.about-approach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.about-visit-copy {
+  margin-top: 16px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+@media (max-width: 980px) {
+  .about-approach-grid { grid-template-columns: 1fr; }
+}
+
+/* Service page booking form states */
+.booking-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.booking-error { margin: 0; padding: 12px 14px; border-radius: 12px; background: rgba(220, 38, 38, 0.12); color: #ef4444; }
+[data-theme='light'] .booking-error { color: #b91c1c; }
+.form-button[disabled] { opacity: 0.7; cursor: progress; }
+.booking-done { align-content: center; justify-items: center; text-align: center; min-height: 280px; }
+.booking-done h3 { margin: 0; color: var(--heading); font-size: 1.4rem; }
+.booking-done p { margin: 0; max-width: 380px; color: var(--muted); line-height: 1.6; }
+.booking-done button { cursor: pointer; font: inherit; font-weight: 700; }

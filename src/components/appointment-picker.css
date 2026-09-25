@@ -1,0 +1,194 @@
+.appt {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.appt legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin-bottom: 10px;
+  padding: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.appt legend em {
+  color: var(--muted);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.appt legend small {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.appt-days {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+
+.appt-day {
+  display: grid;
+  flex: 0 0 auto;
+  justify-items: center;
+  gap: 2px;
+  min-width: 78px;
+  padding: 10px 8px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 14px;
+  background: var(--field);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: border-color 0.15s ease;
+}
+
+.appt-day span {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.appt-day strong {
+  color: var(--heading);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.appt-day small {
+  color: #16a34a;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.appt-day:hover:not(:disabled) {
+  border-color: #f97316;
+}
+
+.appt-day.selected {
+  border-color: transparent;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+}
+
+.appt-day.selected span,
+.appt-day.selected strong,
+.appt-day.selected small {
+  color: #111827;
+}
+
+.appt-day:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.appt-day:disabled small {
+  color: #dc2626;
+}
+
+.appt-more {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.appt-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 8px;
+}
+
+.appt-slot {
+  padding: 10px 0;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 12px;
+  background: var(--field);
+  color: var(--heading);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.appt-slot:hover:not(:disabled) {
+  border-color: #f97316;
+}
+
+.appt-slot.selected {
+  border-color: transparent;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  color: #111827;
+}
+
+.appt-slot:disabled {
+  color: var(--muted);
+  text-decoration: line-through;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.appt-day:focus-visible,
+.appt-slot:focus-visible,
+.appt-more:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
+}
+
+.appt-summary,
+.appt-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.appt-summary strong {
+  color: var(--heading);
+}
+
+.appt-note {
+  padding: 12px 14px;
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  border-radius: 12px;
+}
+
+.appt-error {
+  margin: 0;
+  color: #ef4444;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+[data-theme='light'] .appt-error {
+  color: #b91c1c;
+}
+
+[data-theme='light'] .appt-day small {
+  color: #15803d;
+}
+
+.appt-invalid .appt-days {
+  border-radius: 14px;
+  outline: 2px solid rgba(239, 68, 68, 0.5);
+  outline-offset: 4px;
+}

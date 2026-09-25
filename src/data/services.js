@@ -94,13 +94,14 @@ export const services = [
       },
     ],
     formTitle: 'Book a repair check',
+    // Shows the day/time picker; 'required' or 'optional'.
+    appointment: 'required',
     formIntro: 'Tell us what vehicle you need checked and when you are available.',
     formFields: [
       { name: 'name', label: 'Name', type: 'text', placeholder: 'Your name', required: true },
       { name: 'phone', label: 'Phone', type: 'tel', placeholder: '+976 ...', required: true },
       { name: 'vehicle', label: 'Vehicle', type: 'text', placeholder: 'Make, model, year', required: true },
       { name: 'issue', label: 'Problem or issue', type: 'text', placeholder: 'What is happening?', required: true },
-      { name: 'time', label: 'Preferred time', type: 'text', placeholder: 'Date or time', required: true },
       { name: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Tell us more about the issue...', required: false },
     ],
     image:
@@ -111,54 +112,33 @@ export const services = [
     accent: '03',
     title: 'Buy a car / Sell a car',
     summary:
-      'Simple guidance for buying and selling cars, with honest advice on what is easy, what is hard, and what matters most.',
+      'Buying: a mechanic checks the car before you pay. Selling: an honest price, buyers found for you, and the paperwork handled.',
     intro:
-      'Buying or selling a vehicle can be easy if you know what to check and what to expect. It can also become difficult fast if the condition is unclear, the price is wrong, or the paperwork is not organized. We help make both sides clearer and more practical.',
+      'Buying: Justin inspects and test-drives the cars you are considering and tells you what is wrong, what repairs would cost, and whether the price is fair. Selling: we check the car, agree a realistic asking price based on its condition and the Mongolian market, prepare it, find serious buyers, show the car by arrangement, and help with the sale documents and handover. The selling fee is a percentage of the final sale price, agreed before we start. Buying help is quoted per job.',
     overview: [
-      'Buying guidance and value checks',
-      'Selling support and honest pricing',
-      'Paperwork and decision support',
-      'Clear process from start to finish',
+      'Pre-purchase inspection and test drive',
+      'Honest valuation of your car',
+      'Buyers found and viewings handled',
+      'Paperwork and handover support',
     ],
     points: [
-      'How to buy a car without rushing the decision',
-      'How to sell a car with honest positioning and value',
-      'What is easy and what is difficult in each process',
-      'Advice on condition, price, and buyer confidence',
-      'Support with paperwork and next-step planning',
-      'Practical guidance for real Mongolian market conditions',
+      'Engine, gearbox, suspension, brakes and diagnostic checks',
+      'Signs of accident repair, rust or flood damage',
+      'Price based on year, import year, mileage, condition and demand',
+      'Listing, buyer calls and viewings handled for sellers',
+      'Help with sale documents and ownership transfer',
+      'Selling fee: a percentage of the final sale price',
     ],
     process: [
-      {
-        title: 'Explain your goal',
-        description: 'We start by understanding whether you want to buy, sell, or both.',
-      },
-      {
-        title: 'Check the value and condition',
-        description: 'We review the vehicle, market value, and the practical realities of the deal.',
-      },
-      {
-        title: 'Guide the next move',
-        description: 'You get a realistic plan for how to buy or sell without unnecessary stress or surprises.',
-      },
+      { title: 'Tell us your goal', description: 'Buying or selling, the car, and your budget or price in mind.' },
+      { title: 'Check the car', description: 'Justin inspects it as a mechanic and we look at what similar cars sell for.' },
+      { title: 'Close the deal', description: 'Negotiate with facts, then finish paperwork and handover properly.' },
     ],
     formTitle: 'Tell us what you want to buy or sell',
     formIntro: 'Share details about the vehicle and the kind of help you need.',
-    formFields: [
-      { name: 'name', label: 'Name', type: 'text', placeholder: 'Your name', required: true },
-      { name: 'phone', label: 'Phone', type: 'tel', placeholder: '+976 ...', required: true },
-      {
-        name: 'goal',
-        label: 'I want to',
-        type: 'select',
-        placeholder: 'Choose an option',
-        required: true,
-        options: ['Buy a car', 'Sell a car'],
-      },
-      { name: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Anything important to know...', required: false },
-    ],
+    formFields: [],
     image:
-      'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80',
   },
   {
     slug: 'other',
@@ -197,6 +177,7 @@ export const services = [
       },
     ],
     formTitle: 'Ask about your vehicle concern',
+    appointment: 'optional',
     formIntro: 'Let us know what you need help with and when you are available.',
     formFields: [
       { name: 'name', label: 'Name', type: 'text', placeholder: 'Your name', required: true },
@@ -211,7 +192,6 @@ export const services = [
       },
       { name: 'subject', label: 'Subject', type: 'text', placeholder: 'What do you need help with?', required: true },
       { name: 'vehicle', label: 'Vehicle details', type: 'text', placeholder: 'Make, model, or year', required: false },
-      { name: 'time', label: 'Preferred time', type: 'text', placeholder: 'Any date or time', required: false },
       { name: 'notes', label: 'Details', type: 'textarea', placeholder: 'Tell us more...', required: false },
     ],
     image:

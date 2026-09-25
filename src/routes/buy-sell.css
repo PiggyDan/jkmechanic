@@ -1,0 +1,368 @@
+/* Buy / sell page. Builds on the home page styles (home.css) for hero, sections and form. */
+.buysell-hero {
+  min-height: min(600px, 80vh);
+}
+
+.buysell-back {
+  display: block;
+  width: fit-content;
+  margin-bottom: 18px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.buysell-back:hover {
+  color: #fbbf24;
+}
+
+.buysell-hero .home-actions button {
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.buysell-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.buysell-jump a {
+  padding: 8px 14px;
+  border: 1px solid rgba(248, 250, 252, 0.22);
+  border-radius: 999px;
+  background: rgba(8, 12, 20, 0.45);
+  color: #e2e8f0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+}
+
+.buysell-jump a:hover {
+  border-color: #fbbf24;
+  color: #fbbf24;
+}
+
+/* Cards */
+.buysell-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.buysell-card {
+  position: relative;
+  padding: 22px 20px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  color: var(--gold);
+}
+
+.buysell-card h3 {
+  margin: 14px 0 8px;
+  font-size: 1.05rem;
+}
+
+.buysell-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.buysell-card-step {
+  position: absolute;
+  top: 20px;
+  right: 18px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Buying */
+.buysell-split {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.buysell-lead {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.buysell-subhead {
+  margin: 26px 0 12px;
+  font-size: 1rem;
+}
+
+.buysell-checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.buysell-checks li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.buysell-checks li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 800;
+}
+
+.buysell-fee {
+  margin: 24px 0 0;
+  padding: 14px 16px;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.buysell-fee strong {
+  color: var(--heading);
+}
+
+.buysell-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.buysell-steps {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.buysell-steps li {
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+}
+
+.buysell-step-number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  color: #111827;
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.buysell-steps h3 {
+  margin: 0 0 4px;
+  font-size: 1.02rem;
+}
+
+.buysell-steps p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Pricing band (dark in both themes) */
+.buysell-pricing {
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+
+.buysell-pricing-head {
+  max-width: 680px;
+}
+
+.buysell-factors {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.buysell-factor {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.buysell-factor svg {
+  flex-shrink: 0;
+  color: #fbbf24;
+}
+
+.buysell .buysell-factor h3 {
+  margin: 0 0 4px;
+  color: #f8fafc;
+  font-size: 0.95rem;
+}
+
+.buysell-factor p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.buysell-fee-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  border-radius: 20px;
+  background: rgba(251, 191, 36, 0.08);
+}
+
+.buysell-fee-card > svg {
+  flex-shrink: 0;
+  color: #fbbf24;
+}
+
+.buysell-fee-card > div {
+  flex: 1;
+}
+
+.buysell .buysell-fee-card h3 {
+  margin: 0 0 4px;
+  color: #f8fafc;
+}
+
+.buysell-fee-card p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+.buysell-fee-card strong {
+  color: #fbbf24;
+}
+
+.buysell-fee-card button {
+  flex-shrink: 0;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Form */
+.buysell-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  color: var(--heading);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.buysell-call svg {
+  color: var(--gold);
+}
+
+.buysell-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--field);
+}
+
+.buysell .buysell-toggle label {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.buysell-toggle label.active {
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  color: #111827;
+}
+
+/* Visually hidden radios; the labels are the visible buttons. */
+.buysell .buysell-toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.buysell-toggle label:has(input:focus-visible) {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
+}
+
+@media (max-width: 980px) {
+  .buysell-cards,
+  .buysell-factors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .buysell-split {
+    grid-template-columns: 1fr;
+  }
+
+  .buysell-fee-card {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 680px) {
+  .buysell-cards,
+  .buysell-factors,
+  .buysell-checks {
+    grid-template-columns: 1fr;
+  }
+
+  .buysell-hero {
+    min-height: 0;
+  }
+
+  .buysell-fee-card button {
+    width: 100%;
+  }
+}

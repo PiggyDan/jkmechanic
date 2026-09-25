@@ -1,0 +1,81 @@
+.money-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.money-field label span {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.money-field label em {
+  color: var(--muted);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.money-row {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+
+.money-input {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.money-field .money-input input {
+  width: 100%;
+  padding-right: 5.6rem;
+}
+
+.money-unit {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.money-currency {
+  display: flex;
+  flex-shrink: 0;
+  padding: 3px;
+  border: 1px solid var(--line, rgba(148, 163, 184, 0.18));
+  border-radius: 14px;
+  background: var(--field);
+}
+
+.money-currency button {
+  padding: 0 10px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money-currency button.active {
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  color: #111827;
+}
+
+.money-currency button:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 1px;
+}
+
+.money-preview {
+  color: var(--muted);
+  font-size: 0.8rem;
+}

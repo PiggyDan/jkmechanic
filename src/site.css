@@ -1,0 +1,200 @@
+/* Site-wide design layer: type, header and shared buttons. Loaded after App.css. */
+:root {
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Archivo', 'Inter', 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+.brand-name,
+.brand-mark {
+  font-family: var(--font-display);
+  font-stretch: 105%;
+}
+
+h1 {
+  font-weight: 800;
+}
+
+h2,
+h3 {
+  font-weight: 700;
+}
+
+/* The older page styles use very tight tracking tuned for a system font; Archivo needs less. */
+.luxury-page :is(h1, h2, h3),
+.service-detail-page :is(h1, h2, h3) {
+  letter-spacing: -0.015em;
+}
+
+/* Keep anchored sections clear of the sticky header */
+[id] {
+  scroll-margin-top: 110px;
+}
+
+::selection {
+  background: rgba(249, 115, 22, 0.35);
+}
+
+/* Header: slimmer, sticky, one primary action */
+.topbar {
+  position: sticky;
+  top: 12px;
+  z-index: 40;
+  padding: 10px 12px 10px 16px;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px var(--shadow);
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  font-size: 0.95rem;
+}
+
+.brand-name {
+  font-size: 1.05rem;
+}
+
+.nav {
+  gap: 6px;
+}
+
+.nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--text);
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+  background: var(--card);
+  color: var(--heading);
+}
+
+.header-actions {
+  gap: 8px;
+}
+
+.header-actions .theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.messenger-button {
+  padding: 0.7rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: var(--text);
+  box-shadow: none;
+}
+
+.messenger-button:hover {
+  background: var(--card);
+}
+
+.pill-button {
+  padding: 0.75rem 1.2rem;
+  box-shadow: 0 10px 22px rgba(249, 115, 22, 0.28);
+}
+
+.primary-button,
+.secondary-button {
+  font-family: var(--font-body);
+}
+
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.pill-button:focus-visible,
+.nav a:focus-visible {
+  outline: 3px solid #f97316;
+  outline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+    top: 8px;
+  }
+
+  .nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .header-actions {
+    width: auto;
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    flex-direction: row;
+  }
+
+  .header-actions .pill-button {
+    flex: 0 0 auto;
+    padding: 0.65rem 0.95rem;
+    font-size: 0.88rem;
+  }
+
+  /* Icon-only Messenger on phones */
+  .messenger-button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 0;
+    gap: 0;
+  }
+
+  .messenger-button .messenger-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .nav a {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Very narrow phones: logo mark only, so every header control still fits */
+@media (max-width: 420px) {
+  .topbar .brand-block > div:last-child {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Your own logo (src/assets/brand/logo.*) in place of the "JK" square */
+img.brand-mark-img {
+  display: block;
+  object-fit: contain;
+  background: none;
+}

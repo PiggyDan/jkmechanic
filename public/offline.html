@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline · Garage 84</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box;
+        background: #0b1120; color: #cbd5e1; font-family: Inter, 'Segoe UI', system-ui, sans-serif; text-align: center; }
+      .mark { width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 20px; display: grid; place-items: center;
+        background: linear-gradient(135deg, #fbbf24, #f97316); color: #0b1120; font-weight: 900; font-size: 26px; }
+      h1 { margin: 0 0 10px; color: #f8fafc; font-size: 1.6rem; }
+      p { margin: 0 auto 24px; max-width: 320px; line-height: 1.6; }
+      a { display: inline-block; padding: 14px 22px; border-radius: 999px; background: linear-gradient(135deg, #fbbf24, #f97316);
+        color: #111827; font-weight: 700; text-decoration: none; }
+      button { display: block; margin: 16px auto 0; border: 0; background: none; color: #fbbf24; font: inherit; text-decoration: underline; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark">JK</div>
+      <h1>You're offline</h1>
+      <p>No internet connection right now. You can still call Garage 84 directly.</p>
+      <a href="tel:+97688856529">Call +976 8885 6529</a>
+      <button type="button" onclick="location.reload()">Try again</button>
+    </main>
+  </body>
+</html>
