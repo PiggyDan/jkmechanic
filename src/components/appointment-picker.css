@@ -31,96 +31,184 @@
   font-weight: 400;
 }
 
-.appt-days {
-  display: flex;
-  gap: 8px;
-  padding-bottom: 6px;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-}
-
-.appt-day {
-  display: grid;
-  flex: 0 0 auto;
-  justify-items: center;
-  gap: 2px;
-  min-width: 78px;
-  padding: 10px 8px;
-  border: 1px solid rgba(148, 163, 184, 0.28);
-  border-radius: 14px;
+/* "No preference" (optional forms) */
+.appt .appt-any {
+  justify-self: start;
+  padding: 9px 14px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 999px;
   background: var(--field);
   color: var(--text);
   font: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
   cursor: pointer;
-  scroll-snap-align: start;
-  transition: border-color 0.15s ease;
+  opacity: 1;
 }
 
-.appt-day span {
-  color: var(--muted);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.appt-day strong {
-  color: var(--heading);
-  font-size: 0.95rem;
-  white-space: nowrap;
-}
-
-.appt-day small {
-  color: #16a34a;
-  font-size: 0.72rem;
-  font-weight: 600;
-}
-
-.appt-day:hover:not(:disabled) {
-  border-color: #f97316;
-}
-
-.appt-day.selected {
+.appt .appt-any.selected {
   border-color: transparent;
   background: linear-gradient(135deg, #fbbf24, #f97316);
-}
-
-.appt-day.selected span,
-.appt-day.selected strong,
-.appt-day.selected small {
   color: #111827;
 }
 
-.appt-day:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
+/* Month calendar */
+.appt-cal {
+  padding: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 16px;
+  background: var(--field);
 }
 
-.appt-day:disabled small {
-  color: #dc2626;
+.appt-cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-.appt-more {
-  justify-self: start;
+.appt-cal-head strong {
+  color: var(--heading);
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+
+.appt .appt-cal-head button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
   padding: 0;
-  border: 0;
-  background: none;
-  color: var(--gold);
-  font: inherit;
-  font-size: 0.86rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--heading);
   cursor: pointer;
+  opacity: 1;
 }
 
+.appt .appt-cal-head button:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.appt-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.appt-cal-weekday {
+  padding: 4px 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.appt .appt-cal-day {
+  position: relative;
+  height: 44px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--heading);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* Bookable: a small green dot under the number */
+.appt .appt-cal-day.is-open {
+  background: var(--card);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.appt .appt-cal-day.is-open::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #16a34a;
+  transform: translateX(-50%);
+}
+
+.appt .appt-cal-day.is-open:hover {
+  border-color: #f97316;
+}
+
+.appt .appt-cal-day.selected {
+  border-color: transparent;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  color: #111827;
+}
+
+.appt .appt-cal-day.selected::after {
+  background: #111827;
+}
+
+.appt .appt-cal-day.is-today {
+  box-shadow: inset 0 0 0 1px var(--gold);
+}
+
+/* Not clickable: fully booked (red, crossed out), closed or outside the booking window (faded) */
+.appt .appt-cal-day:disabled {
+  cursor: not-allowed;
+}
+
+.appt .appt-cal-day.is-full {
+  background: rgba(220, 38, 38, 0.12);
+  color: #dc2626;
+  text-decoration: line-through;
+}
+
+.appt .appt-cal-day.is-closed,
+.appt .appt-cal-day.is-out {
+  color: var(--muted);
+  opacity: 0.4;
+}
+
+.appt-cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.appt-cal-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.appt-cal-legend .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.appt-cal-legend .dot.open { background: #16a34a; }
+.appt-cal-legend .dot.full { background: #dc2626; }
+.appt-cal-legend .dot.closed { background: rgba(148, 163, 184, 0.6); }
+
+/* Times for the chosen day */
 .appt-slots {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
   gap: 8px;
 }
 
-.appt-slot {
+.appt .appt-slot {
   padding: 10px 0;
   border: 1px solid rgba(148, 163, 184, 0.28);
   border-radius: 12px;
@@ -129,28 +217,27 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  opacity: 1;
 }
 
-.appt-slot:hover:not(:disabled) {
+.appt .appt-slot:hover:not(:disabled) {
   border-color: #f97316;
 }
 
-.appt-slot.selected {
+.appt .appt-slot.selected {
   border-color: transparent;
   background: linear-gradient(135deg, #fbbf24, #f97316);
   color: #111827;
 }
 
-.appt-slot:disabled {
+.appt .appt-slot:disabled {
   color: var(--muted);
   text-decoration: line-through;
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
-.appt-day:focus-visible,
-.appt-slot:focus-visible,
-.appt-more:focus-visible {
+.appt button:focus-visible {
   outline: 2px solid #f97316;
   outline-offset: 2px;
 }
@@ -179,16 +266,11 @@
   font-weight: 600;
 }
 
-[data-theme='light'] .appt-error {
+[data-theme='light'] .appt-error,
+[data-theme='light'] .appt .appt-cal-day.is-full {
   color: #b91c1c;
 }
 
-[data-theme='light'] .appt-day small {
-  color: #15803d;
-}
-
-.appt-invalid .appt-days {
-  border-radius: 14px;
-  outline: 2px solid rgba(239, 68, 68, 0.5);
-  outline-offset: 4px;
+.appt-invalid .appt-cal {
+  border-color: rgba(239, 68, 68, 0.6);
 }
