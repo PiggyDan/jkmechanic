@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  Archive, ArchiveRestore, Bell, BellOff, BellRing, CalendarClock, CalendarDays, Check, ClipboardList, Download, LogOut, Mail, MessagesSquare, Phone, RefreshCw, RotateCcw, Star, Trash2, Volume2, VolumeX, X,
+  Archive, ArchiveRestore, Bell, BellOff, BellRing, CalendarClock, CalendarDays, Check, ClipboardList, Download, LogOut, Mail, MessagesSquare, Phone, RefreshCw, Star, Trash2, Volume2, VolumeX, Wrench, X,
 } from 'lucide-react'
 import ThemeToggle from '../../components/ThemeToggle.jsx'
 import AdminChats from './AdminChats'
@@ -10,6 +10,7 @@ import AdminReviews from './AdminReviews'
 import NotificationBell from './NotificationBell'
 import { formatLongDay } from '../data/schedule'
 import { downloadCsv, requestsToCsv } from '../lib/exportCsv'
+import { REQUEST_STATUSES } from '../data/requestStatus'
 import { adminApi, chatLabel, playChime, timeAgo, timeFormat } from './adminApi'
 import './admin.css'
 import BrandMark from '../components/BrandMark'
@@ -66,8 +67,23 @@ function LoginForm({ onLogin }) {
   )
 }
 
+// Quick "next step" per stage, next to the full status menu.
+const NEXT_STEP = {
+  new: { status: 'in_progress', label: 'Start work', icon: Wrench },
+  in_progress: { status: 'done', label: 'Mark done', icon: Check },
+  waiting_parts: { status: 'in_progress', label: 'Parts arrived', icon: Wrench },
+  waiting_work: { status: 'in_progress', label: 'Start work', icon: Wrench },
+}
+
+function StatusBadge({ status }) {
+  const stage = REQUEST_STATUSES.find((item) => item.value === status) ?? REQUEST_STATUSES[0]
+  return <span className={`admin-status admin-status-${stage.tone}`}>{stage.label}</span>
+}
+
 function RequestCard({ request, fresh, onStatus, onDelete }) {
   const isNew = request.status === 'new'
+  const next = NEXT_STEP[request.status]
+  const NextIcon = next?.icon
   return (
     <article className={`admin-card${isNew ? ' is-new' : ''}${fresh ? ' is-fresh' : ''}`}>
       <header>
@@ -79,7 +95,7 @@ function RequestCard({ request, fresh, onStatus, onDelete }) {
           </p>
         </div>
         <div className="admin-card-side">
-          {isNew && <span className="admin-badge">New</span>}
+          <StatusBadge status={request.status} />
           <time dateTime={new Date(request.createdAt).toISOString()} title={timeFormat.format(request.createdAt)}>
             {timeAgo(request.createdAt)}
           </time>
@@ -109,11 +125,14 @@ function RequestCard({ request, fresh, onStatus, onDelete }) {
       )}
 
       <footer>
-        <span className="admin-exact-time">{timeFormat.format(request.createdAt)}</span>
+        <span className="admin-exact-time">
+          Received {timeFormat.format(request.createdAt)}
+          {request.statusAt && <> · updated {timeAgo(request.statusAt)}</>}
+        </span>
         <div className="admin-card-actions">
           {request.status === 'archived' ? (
             <>
-              <button type="button" className="admin-btn" onClick={() => onStatus(request, 'handled')}>
+              <button type="button" className="admin-btn" onClick={() => onStatus(request, 'done')}>
                 <ArchiveRestore size={15} /> Restore
               </button>
               <button type="button" className="admin-btn admin-btn-danger" onClick={() => onDelete(request)}>
@@ -122,15 +141,17 @@ function RequestCard({ request, fresh, onStatus, onDelete }) {
             </>
           ) : (
             <>
-              {isNew ? (
-                <button type="button" className="admin-btn admin-btn-primary" onClick={() => onStatus(request, 'handled')}>
-                  <Check size={15} /> Mark handled
-                </button>
-              ) : (
-                <button type="button" className="admin-btn" onClick={() => onStatus(request, 'new')}>
-                  <RotateCcw size={15} /> Mark as new
+              {next && (
+                <button type="button" className="admin-btn admin-btn-primary" onClick={() => onStatus(request, next.status)}>
+                  <NextIcon size={15} /> {next.label}
                 </button>
               )}
+              <label className="admin-status-select">
+                <span className="visually-hidden">Status</span>
+                <select value={request.status} onChange={(event) => onStatus(request, event.target.value)}>
+                  {REQUEST_STATUSES.map((stage) => <option key={stage.value} value={stage.value}>{stage.label}</option>)}
+                </select>
+              </label>
               <button type="button" className="admin-btn" onClick={() => onStatus(request, 'archived')} title="Archive: hide it but keep it saved" aria-label={`Archive request from ${request.name}`}>
                 <Archive size={15} />
               </button>
@@ -374,7 +395,7 @@ function AdminPage() {
       next.delete(request.id)
       return next
     })
-    setRequests((list) => list.map((item) => (item.id === request.id ? { ...item, status } : item)))
+    setRequests((list) => list.map((item) => (item.id === request.id ? { ...item, status, statusAt: Date.now() } : item)))
     try {
       await adminApi(token, 'requests', 'PATCH', { body: { id: request.id, status } })
     } catch (err) {
@@ -402,12 +423,14 @@ function AdminPage() {
     )
   }
 
-  const counts = {
-    new: newCount,
-    handled: requests?.filter((item) => item.status === 'handled').length ?? 0,
-    archived: requests?.filter((item) => item.status === 'archived').length ?? 0,
-    all: requests?.filter((item) => item.status !== 'archived').length ?? 0,
-  }
+  // Count per stage; "All" leaves archived requests out.
+  const counts = Object.fromEntries(REQUEST_STATUSES.map((stage) => [stage.value, requests?.filter((item) => item.status === stage.value).length ?? 0]))
+  counts.all = requests?.filter((item) => item.status !== 'archived').length ?? 0
+  const requestTabs = [
+    ...REQUEST_STATUSES.filter((stage) => stage.value !== 'archived').map((stage) => [stage.value, stage.label]),
+    ['all', 'All'],
+    ['archived', 'Archived'],
+  ]
   const query = search.trim().toLowerCase()
   const visible = (requests ?? [])
     // "All" leaves archived requests out; they have their own tab.
@@ -505,7 +528,7 @@ function AdminPage() {
           <>
             <div className="admin-toolbar">
               <div className="admin-tabs" role="tablist" aria-label="Filter requests">
-                {[['new', 'New'], ['handled', 'Handled'], ['all', 'All'], ['archived', 'Archived']].map(([value, label]) => (
+                {requestTabs.map(([value, label]) => (
                   <button key={value} type="button" role="tab" aria-selected={filter === value} className={filter === value ? 'active' : ''} onClick={() => setFilter(value)}>
                     {label} <span>{counts[value]}</span>
                   </button>

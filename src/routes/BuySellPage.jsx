@@ -102,7 +102,7 @@ function BuySellPage() {
 
         <section id="why" className="home-section reveal" aria-labelledby="why-title">
           <div className="home-section-head">
-            <span className="home-kicker">Why use JK Mongolia</span>
+            <span className="home-kicker">Why use Jkmechanic Shop</span>
             <h2 id="why-title">Most car deals go wrong on things nobody checked.</h2>
           </div>
           <div className="buysell-cards">

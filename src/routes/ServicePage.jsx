@@ -4,8 +4,9 @@ import { services } from '../data/services'
 import Header from '../components/Header'
 import { submitRequest } from '../lib/submitRequest'
 import AppointmentPicker from '../components/AppointmentPicker'
+import TimeSelect from '../components/TimeSelect'
 import BuySellPage from './BuySellPage'
-import { servicePhoto } from '../data/brand'
+import { bookingPhoto, servicePhoto } from '../data/brand'
 
 const t = {
   back: 'Back to home',
@@ -15,7 +16,7 @@ const t = {
   booking: 'Booking',
   clearProcess: 'A clear process, without the confusion.',
   needThis: 'Need this service?',
-  contact: 'Contact JK Mongolia',
+  contact: 'Contact Jkmechanic Shop',
   sendRequest: 'Send booking request',
   details: 'What this includes',
   why: 'Why it matters',
@@ -182,7 +183,11 @@ function ServicePage({ slug }) {
           </div>
         </section>
 
-        <section id="booking" className="booking-panel reveal">
+        <section
+          id="booking"
+          className={`booking-panel reveal${bookingPhoto(service) ? ' booking-panel-photo' : ''}`}
+          style={bookingPhoto(service) ? { '--booking-image': `url(${bookingPhoto(service)})` } : undefined}
+        >
           <div className="booking-copy">
             <span className="eyebrow dark">{t.booking}</span>
             <h2>{service.formTitle}</h2>
@@ -210,6 +215,14 @@ function ServicePage({ slug }) {
                     placeholder={field.placeholder}
                     required={field.required}
                   />
+                ) : field.type === 'time' ? (
+                  <TimeSelect
+                    name={field.name}
+                    label={field.label}
+                    value={formData[field.name] || ''}
+                    onChange={handleChange}
+                    required={field.required}
+                  />
                 ) : field.type === 'select' ? (
                   <select
                     name={field.name}
@@ -232,7 +245,6 @@ function ServicePage({ slug }) {
                     onChange={handleChange}
                     placeholder={field.placeholder}
                     required={field.required}
-                    step={field.type === 'time' ? 60 : undefined}
                     onFocus={(event) => {
                       if (field.type === 'date') {
                         event.target.showPicker?.()

@@ -1,6 +1,6 @@
 // POST   /api/requests          — public: save a booking/contact request (optional appointment: { date, time })
 // GET    /api/requests          — admin: list the latest requests
-// PATCH  /api/requests          — admin: { id, status: 'new' | 'handled' | 'archived' } (archived = hidden but kept)
+// PATCH  /api/requests          — admin: { id, status } — a workshop stage from src/data/requestStatus.js (archived = hidden but kept)
 // DELETE /api/requests?id=...   — admin: remove a request
 import { randomUUID } from 'node:crypto'
 import { KEYS, clientIp, redis, redisConfigured, requireAdmin, sendEmailCopy, underRateLimit } from './_lib.js'
@@ -8,9 +8,9 @@ import { getBlocked } from './_availability.js'
 import { notifyStaff } from './_push.js'
 import { logActivity } from './_activity.js'
 import { appointmentProblem } from '../src/data/schedule.js'
+import { STATUS_VALUES, normalizeStatus } from '../src/data/requestStatus.js'
 
 const MAX_LIST = 1000
-const STATUSES = ['new', 'handled', 'archived']
 
 const text = (value, max) => String(value ?? '').trim().slice(0, max)
 
@@ -82,20 +82,24 @@ async function listRequests(res) {
   if (!ids.length) return res.status(200).json({ requests: [] })
 
   const [values] = await redis(['MGET', ...ids.map(KEYS.request)])
-  const requests = values.filter(Boolean).map((value) => JSON.parse(value))
+  // Older requests used "handled"; they are listed as Done.
+  const requests = values.filter(Boolean).map((value) => {
+    const request = JSON.parse(value)
+    return { ...request, status: normalizeStatus(request.status) }
+  })
   return res.status(200).json({ requests })
 }
 
 async function updateRequest(req, res) {
   const { id, status } = req.body || {}
-  if (typeof id !== 'string' || !STATUSES.includes(status)) {
+  if (typeof id !== 'string' || !STATUS_VALUES.includes(status)) {
     return res.status(400).json({ error: 'Invalid update.' })
   }
 
   const [value] = await redis(['GET', KEYS.request(id)])
   if (!value) return res.status(404).json({ error: 'Request not found.' })
 
-  const entry = { ...JSON.parse(value), status }
+  const entry = { ...JSON.parse(value), status, statusAt: Date.now() }
   await redis(['SET', KEYS.request(id), JSON.stringify(entry)])
   return res.status(200).json({ request: entry })
 }

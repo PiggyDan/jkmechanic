@@ -1,3 +1,5 @@
+import { statusLabel } from '../data/requestStatus'
+
 // Saves booking requests as a CSV file that opens in Excel / Google Sheets.
 // Every form field gets its own column, so different services' fields line up.
 
@@ -15,7 +17,6 @@ const dateTime = (timestamp) => {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`
 }
 
-const STATUS_LABELS = { new: 'New', handled: 'Handled', archived: 'Archived' }
 
 export function requestsToCsv(requests) {
   const fieldLabels = [...new Set(requests.flatMap((request) => request.fields.map((field) => field.label)))]
@@ -24,7 +25,7 @@ export function requestsToCsv(requests) {
     const fields = Object.fromEntries(request.fields.map((field) => [field.label, field.value]))
     return [
       dateTime(request.createdAt),
-      STATUS_LABELS[request.status] ?? request.status,
+      statusLabel(request.status),
       request.name,
       request.phone,
       request.email,

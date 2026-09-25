@@ -1304,3 +1304,68 @@
 @keyframes admin-pulse {
   50% { opacity: 0.5; }
 }
+
+/* Workshop stages */
+.admin-status {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin-status-orange { background: rgba(249, 115, 22, 0.16); color: #c2410c; }
+.admin-status-blue { background: rgba(59, 130, 246, 0.16); color: #1d4ed8; }
+.admin-status-purple { background: rgba(147, 51, 234, 0.15); color: #7e22ce; }
+.admin-status-amber { background: rgba(234, 179, 8, 0.2); color: #a16207; }
+.admin-status-green { background: rgba(22, 163, 74, 0.15); color: #15803d; }
+.admin-status-gray { background: rgba(148, 163, 184, 0.2); color: var(--muted); }
+
+[data-theme='dark'] .admin-status-orange { color: #fdba74; }
+[data-theme='dark'] .admin-status-blue { color: #93c5fd; }
+[data-theme='dark'] .admin-status-purple { color: #d8b4fe; }
+[data-theme='dark'] .admin-status-amber { color: #fde047; }
+[data-theme='dark'] .admin-status-green { color: #86efac; }
+
+.admin-status-select select {
+  padding: 0.5rem 2rem 0.5rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--field) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0.7rem center;
+  color: var(--heading);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+}
+
+.admin-status-select select:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.admin-card-actions {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Seven stage tabs: scroll sideways on small screens instead of overflowing */
+.admin-tabs {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.admin-tabs button {
+  white-space: nowrap;
+}

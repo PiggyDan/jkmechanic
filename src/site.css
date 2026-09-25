@@ -215,3 +215,231 @@ img.brand-logo-full {
     height: 44px;
   }
 }
+
+/* Service booking panel: stack the intro above the form on phones, so fields get the full width */
+@media (max-width: 760px) {
+  .booking-panel {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+}
+
+/* Service booking section with a photo behind it (e.g. the van on Driver & transfers).
+   The photo sits behind the intro side; a dark fade keeps the text readable in both themes. */
+.booking-panel.booking-panel-photo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #0b1120;
+}
+
+.booking-panel.booking-panel-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  /* Desktop: photo only behind the intro column (left), with the van in view; fades out towards the form. */
+  width: 48%;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 20, 0.05) 0%, rgba(8, 12, 20, 0.2) 50%, rgba(8, 12, 20, 0.92) 82%),
+    var(--booking-image) 60% 50% / cover no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, #000 75%, transparent);
+  mask-image: linear-gradient(90deg, #000 75%, transparent);
+}
+
+.booking-panel-photo .booking-copy h2 {
+  color: #f8fafc;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.booking-panel-photo .booking-copy p {
+  color: #e2e8f0;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+.booking-panel-photo .booking-copy .eyebrow {
+  color: #fbbf24;
+}
+
+.booking-panel-photo .booking-copy {
+  align-self: end;
+  padding: 12px;
+}
+
+@media (max-width: 760px) {
+  .booking-panel.booking-panel-photo::before {
+    right: 0;
+    width: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    background:
+      linear-gradient(180deg, rgba(8, 12, 20, 0.2) 0%, rgba(8, 12, 20, 0.75) 26%, rgba(8, 12, 20, 0.95) 42%),
+      var(--booking-image) center top / 100% auto no-repeat;
+  }
+
+  .booking-panel-photo .booking-copy {
+    padding-top: 150px;
+  }
+}
+
+/* Service page photo: fill its rounded frame (no empty strip underneath) */
+.detail-image-wrap {
+  display: flex;
+}
+
+.detail-image-wrap img {
+  flex: 1;
+  min-height: 360px;
+  object-fit: cover;
+}
+
+/* ===== Service pages on phones: app-style layout ===== */
+@media (max-width: 760px) {
+  .service-detail-page {
+    width: calc(100% - 20px);
+    margin: 12px auto 40px;
+  }
+
+  .detail-shell {
+    padding: 16px 16px 24px;
+    border-radius: 22px;
+  }
+
+  .back-link {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+  }
+
+  /* Photo first, then title and text */
+  .detail-hero {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding-top: 4px;
+  }
+
+  .detail-image-wrap {
+    order: -1;
+    min-height: 0;
+    border-radius: 18px;
+  }
+
+  .detail-image-wrap img {
+    min-height: 200px;
+    max-height: 240px;
+  }
+
+  .detail-copy h1 {
+    font-size: 2.1rem;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .detail-copy p {
+    margin-top: 12px;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  /* Feature chips: one swipeable row instead of a wrapped pile */
+  .detail-summary {
+    flex-wrap: nowrap;
+    margin: 18px -16px 4px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .detail-summary::-webkit-scrollbar {
+    display: none;
+  }
+
+  .summary-chip {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  .detail-content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .detail-panel {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  .detail-panel h2 {
+    font-size: 1.3rem;
+  }
+
+  /* "How it works": numbered steps stacked like an app list */
+  .process-section {
+    margin-top: 24px;
+  }
+
+  .section-heading h2 {
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+  }
+
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    counter-reset: step;
+  }
+
+  .process-card {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    column-gap: 14px;
+    align-items: start;
+    padding: 16px;
+    border-radius: 16px;
+    counter-increment: step;
+  }
+
+  .process-card::before {
+    content: counter(step);
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    color: #111827;
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  .process-card span {
+    margin-bottom: 4px;
+    font-size: 1.02rem;
+  }
+
+  .process-card p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .booking-panel {
+    margin-top: 24px;
+    border-radius: 20px;
+  }
+
+  /* Bottom call-to-action: stacked, full-width button */
+  .detail-cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  .detail-cta .primary-button {
+    width: 100%;
+  }
+}

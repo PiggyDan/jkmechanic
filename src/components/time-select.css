@@ -1,0 +1,26 @@
+/* ".booking-form span" styles the field labels; the selectors below are more specific so the
+   picker (which is built from spans) keeps its own layout. */
+.booking-form .time-select,
+.time-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.booking-form .time-select select,
+.time-select select {
+  flex: 1;
+  min-width: 72px;
+  padding-inline: 0.8rem 0.4rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.booking-form .time-select-colon,
+.time-select-colon {
+  flex: 0 0 auto;
+  color: var(--heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+}

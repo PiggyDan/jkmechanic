@@ -688,7 +688,8 @@
   }
 
   .home-footer {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 22px;
     padding: 28px 22px;
   }
 

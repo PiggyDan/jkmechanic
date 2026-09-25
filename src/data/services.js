@@ -205,7 +205,10 @@ export const services = [
       { name: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Flight number, luggage, child seat, places you want to see…', required: false },
     ],
     image:
-      'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1787028331201-75a0abb8ab0e?auto=format&fit=crop&w=1200&q=80',
+    // Background behind the booking form (a passenger van, the usual transfer/tour vehicle).
+    bookingImage:
+      'https://images.unsplash.com/photo-1746985094087-e703bf52c71b?auto=format&fit=crop&w=1600&q=80',
   },
   {
     slug: 'other',
