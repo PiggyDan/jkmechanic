@@ -5,6 +5,7 @@
 // PATCH  /api/chats           — { id, ai: boolean }: hand the chat back to the AI or take it over
 // DELETE /api/chats?id=...    — delete a conversation
 import { redisConfigured, requireAdmin } from './_lib.js'
+import { aiConfigured } from './_ai.js'
 import {
   addMessage, deleteConversation, getConversation, getMessages, isChatId, listConversations, markRead, setAi,
 } from './_chatStore.js'
@@ -29,7 +30,7 @@ export default async function handler(req, res) {
       const conversations = await listConversations()
       return res.status(200).json({
         conversations,
-        aiAvailable: Boolean(process.env.ANTHROPIC_API_KEY),
+        aiAvailable: aiConfigured(),
       })
     }
 

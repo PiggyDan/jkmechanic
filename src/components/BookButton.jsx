@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, CarFront, HelpCircle, KeyRound, Repeat, Wrench, X } from 'lucide-react'
+import { ArrowRight, CarFront, HelpCircle, KeyRound, PlaneLanding, Repeat, Wrench, X } from 'lucide-react'
 import { services } from '../data/services'
 import './book-button.css'
 
@@ -8,6 +8,7 @@ const icons = {
   'vehicle-repair-shop': Wrench,
   'vehicle-rental': KeyRound,
   'buy-sell-car': Repeat,
+  'driver-transfers': PlaneLanding,
   other: HelpCircle,
 }
 

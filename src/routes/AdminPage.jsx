@@ -420,7 +420,7 @@ function AdminPage() {
         <Link className="brand-block" to="/">
           <BrandMark />
           <div>
-            <div className="brand-name">Garage 84</div>
+            <div className="brand-name">Jkmechanic Shop</div>
             <small>Admin</small>
           </div>
         </Link>

@@ -223,7 +223,7 @@ export default function ChatWidget() {
           <header className="chat-head">
             <BrandMark />
             <div>
-              <strong>Garage 84</strong>
+              <strong>Jkmechanic Shop</strong>
               <small>{humanMode ? 'Chatting with Justin' : 'AI assistant · Justin can join'}</small>
             </div>
             {messages.length > 0 && <button type="button" className="chat-reset" onClick={reset}>New chat</button>}

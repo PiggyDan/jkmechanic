@@ -2,11 +2,11 @@ export const services = [
   {
     slug: 'vehicle-rental',
     accent: '01',
-    title: 'Vehicle rental (Musso)',
+    title: 'Vehicle rental',
     summary:
-      'Rent a reliable Musso for work, travel, and everyday use without the hassle of a confusing process.',
+      'Rent a reliable vehicle for work, travel, and everyday use without the hassle of a confusing process.',
     intro:
-      'The Musso is a practical choice when you need more room, stronger road presence, and dependable everyday driving. We keep the rental process clear: choose your dates, confirm the vehicle, and get a simple, honest rental experience built around real use.',
+      'Rent a practical vehicle when you need more room, stronger road presence, and dependable everyday driving. We keep the rental process clear: choose your dates, confirm the vehicle, and get a simple, honest rental experience built around real use.',
     overview: [
       'Flexible daily and long-term rental',
       'Practical SUV for work and travel',
@@ -35,7 +35,7 @@ export const services = [
         description: 'Use it for your trip or work needs, then return it with a simple, clear process.',
       },
     ],
-    formTitle: 'Book a Musso rental',
+    formTitle: 'Book a vehicle rental',
     formIntro: 'Tell us your dates and what you need the vehicle for.',
     formFields: [
       { name: 'name', label: 'Name', type: 'text', placeholder: 'Your name', required: true },
@@ -46,7 +46,7 @@ export const services = [
         type: 'select',
         placeholder: 'Choose vehicle type',
         required: true,
-        options: ['Musso', 'SUV', 'Pickup truck', 'Sedan', 'Van', 'Truck', 'Other'],
+        options: ['SUV', 'Pickup truck', 'Sedan', 'Van', 'Truck', 'Other'],
       },{ name: 'fromDate', label: 'From', type: 'date', placeholder: 'Select start date', required: true },
       { name: 'toDate', label: 'To', type: 'date', placeholder: 'Select end date', required: true },
       { name: 'pickupTime', label: 'Pickup time', type: 'time', placeholder: 'Select pickup time', required: true },
@@ -141,8 +141,75 @@ export const services = [
       'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80',
   },
   {
-    slug: 'other',
+    slug: 'driver-transfers',
     accent: '04',
+    title: 'Driver & transfers',
+    summary:
+      'Airport and city transfers, and trips around Mongolia with a driver who knows the roads.',
+    intro:
+      'Need a lift from Chinggis Khaan International Airport, a ride across Ulaanbaatar, or a driver for a trip into the countryside? Tell us where and when, and we arrange a driver. For tours and overland trips, share your route and how many days, and we plan it with you. The price depends on the distance and the number of days, and we confirm it with you by phone before the trip.',
+    overview: [
+      'Airport pick-up and drop-off',
+      'City and Gachuurt transfers',
+      'Countryside tours and overland trips',
+      'Price confirmed before the trip',
+    ],
+    points: [
+      'Pick-up from Chinggis Khaan International Airport or the train station',
+      'Transfers between Ulaanbaatar, your hotel and Gachuurt',
+      'Day trips and multi-day trips around Mongolia',
+      'Help planning the route for overland travellers',
+      'Price agreed by phone before the trip, based on distance and days',
+      'One request form for all trips; Justin calls to confirm',
+    ],
+    process: [
+      {
+        title: 'Send your trip',
+        description: 'Where from, where to, the date and time, and how many people.',
+      },
+      {
+        title: 'We confirm by phone',
+        description: 'Justin calls you with the price and the details before anything is booked.',
+      },
+      {
+        title: 'Your driver arrives',
+        description: 'Your driver meets you at the agreed place and time.',
+      },
+    ],
+    formTitle: 'Book a driver or transfer',
+    formIntro: 'Tell us about your trip. Justin will call you to confirm the price and details.',
+    formFields: [
+      { name: 'name', label: 'Name', type: 'text', placeholder: 'Your name', required: true },
+      { name: 'phone', label: 'Phone', type: 'tel', placeholder: '+976 ... or your international number', required: true },
+      {
+        name: 'tripType',
+        label: 'Type of trip',
+        type: 'select',
+        placeholder: 'Choose trip type',
+        required: true,
+        options: ['Airport pick-up', 'Airport drop-off', 'City transfer', 'Day trip', 'Multi-day tour / overland trip'],
+      },
+      { name: 'date', label: 'Date', type: 'date', placeholder: 'Select date', required: true },
+      { name: 'time', label: 'Pick-up time', type: 'time', placeholder: 'Select time', required: true },
+      { name: 'pickup', label: 'Pick-up place', type: 'text', placeholder: 'Airport, hotel name, address…', required: true },
+      { name: 'destination', label: 'Destination or route', type: 'text', placeholder: 'e.g. Gachuurt, Terelj, Kharkhorin…', required: true },
+      {
+        name: 'passengers',
+        label: 'Passengers',
+        type: 'select',
+        placeholder: 'How many people?',
+        required: true,
+        options: ['1', '2', '3', '4', '5+'],
+      },
+      { name: 'days', label: 'Number of days (tours)', type: 'text', placeholder: 'e.g. 3 days (leave empty for transfers)', required: false },
+      { name: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Flight number, luggage, child seat, places you want to see…', required: false },
+    ],
+    image:
+      'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    slug: 'other',
+    accent: '05',
     title: 'Other',
     summary:
       'Support for other vehicle concerns, paperwork needs, and practical questions that do not fit neatly into one category.',

@@ -218,7 +218,7 @@ function App() {
               <li><MapPin size={18} /> <span>BZD 20 Khoroo, 10 ail 1-7 toot, Gachuurt, Ulaanbaatar<small>Plus code W5H4+JV</small></span></li>
               <li><Clock size={18} /> <span>{HOURS_SHORT}<small>Closed on weekends</small></span></li>
               <li><Phone size={18} /> <a href="tel:+97688856529">+976 8885 6529</a></li>
-              <li><Mail size={18} /> <a href="mailto:jkmongolia@gmail.com">jkmongolia@gmail.com</a></li>
+              <li><Mail size={18} /> <a href="mailto:jkmechanic@gmail.com">jkmechanic@gmail.com</a></li>
               <li><MessageCircle size={18} /> <a href="https://m.me/jkmongolia" target="_blank" rel="noreferrer">Message us on Messenger</a></li>
             </ul>
             <div className="home-map">
@@ -290,7 +290,7 @@ function App() {
 
       <footer className="home-footer">
         <div className="home-footer-brand">
-          <BrandMark />
+          <BrandMark variant="full" className="home-footer-logo" />
           <div>
             <strong>Jkmechanic Shop · Garage 84</strong>
             <p>Independent auto repair in Gachuurt, Ulaanbaatar.</p>
@@ -304,7 +304,7 @@ function App() {
         <div className="home-footer-col">
           <h2>Contact</h2>
           <a href="tel:+97688856529">+976 8885 6529</a>
-          <a href="mailto:jkmongolia@gmail.com">jkmongolia@gmail.com</a>
+          <a href="mailto:jkmechanic@gmail.com">jkmechanic@gmail.com</a>
           <a href="https://m.me/jkmongolia" target="_blank" rel="noreferrer">Messenger</a>
         </div>
         <div className="home-footer-col">
@@ -313,7 +313,7 @@ function App() {
           <Link to="/about">About us</Link>
           <a href="#contact">Book a visit</a>
         </div>
-        <p className="home-footer-legal">© {new Date().getFullYear()} JK Mongolia. All rights reserved.</p>
+        <p className="home-footer-legal">© {new Date().getFullYear()} JKMechanic Shop. All rights reserved.</p>
       </footer>
     </div>
   )

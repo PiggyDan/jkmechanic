@@ -23,7 +23,7 @@ export const CHAT_SYSTEM_PROMPT = `You are the website assistant for Jkmechanic 
 - Overland travellers heading for China, Russia and Central Asia regularly stop here.
 - Address: BZD 20 Khoroo, 10 ail 1-7 toot, Gachuurt, Ulaanbaatar. Plus code: W5H4+JV Gachuurt. Directions: [Google Maps](${MAPS_URL})
 - Hours: ${HOURS_TEXT}. Closed on weekends. Appointments can be booked online by choosing a day and time in the booking forms.
-- Phone: +976 8885 6529 ([call](tel:+97688856529)). Email: jkmongolia@gmail.com. Facebook Messenger: [Messenger](https://m.me/jkmongolia)
+- Phone: +976 8885 6529 ([call](tel:+97688856529)). Email: jkmechanic@gmail.com. Facebook Messenger: [Messenger](https://m.me/jkmongolia)
 - Google rating: ${GOOGLE_RATING} from ${GOOGLE_REVIEW_COUNT} reviews.
 
 # Services

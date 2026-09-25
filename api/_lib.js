@@ -96,7 +96,7 @@ export async function sendEmailCopy(entry) {
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from,
-      to: [process.env.NOTIFY_EMAIL || 'jkmongolia@gmail.com'],
+      to: [process.env.NOTIFY_EMAIL || 'jkmechanic@gmail.com'],
       reply_to: entry.email || undefined,
       subject: `New request — ${entry.service || 'Website'} — ${entry.name}`,
       html: `<div style="font-family:Arial,sans-serif;font-size:14px"><h2>New request from the website</h2><table>${rows}</table></div>`,

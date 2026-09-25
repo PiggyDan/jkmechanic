@@ -198,3 +198,20 @@ img.brand-mark-img {
   object-fit: contain;
   background: none;
 }
+
+/* Full logo (wide) in the header and footer */
+img.brand-logo-full {
+  width: auto;
+  height: 52px;
+  border-radius: 0;
+}
+
+.home-footer img.brand-logo-full.home-footer-logo {
+  height: 84px;
+}
+
+@media (max-width: 680px) {
+  img.brand-logo-full {
+    height: 44px;
+  }
+}

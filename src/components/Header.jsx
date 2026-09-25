@@ -9,9 +9,9 @@ export default function Header() {
   return (
     <header className="topbar">
       <Link className="brand-block" to="/">
-        <BrandMark />
+        <BrandMark variant="full" />
         <div>
-          <div className="brand-name">Garage 84</div>
+          <div className="brand-name">Jkmechanic Shop</div>
           <small>Automotive Services</small>
         </div>
       </Link>

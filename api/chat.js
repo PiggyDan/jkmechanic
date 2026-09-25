@@ -3,54 +3,19 @@
 // POST /api/chat        { conversationId?, contact: { name, phone } }  — "call me back" details from the chat card
 // GET  /api/chat?id=... — fetch the conversation (the widget polls this to show Justin's replies)
 // The conversation id is a random UUID that only this visitor's browser knows.
-import Anthropic from '@anthropic-ai/sdk'
 import { clientIp, redisConfigured, underRateLimit } from './_lib.js'
-import { CHAT_SYSTEM_PROMPT } from './_chatPrompt.js'
+import { aiConfigured, askAI } from './_ai.js'
 import { addMessage, chatLabel, createConversation, getConversation, getMessages, setContact } from './_chatStore.js'
 import { findPhone } from './_phone.js'
 import { findQuickAnswer } from '../src/data/quickAnswers.js'
 import { notifyStaff } from './_push.js'
 import { logActivity } from './_activity.js'
 
-// Override with CHAT_MODEL (for example claude-haiku-4-5 for lower cost).
-const MODEL = process.env.CHAT_MODEL || 'claude-opus-5'
 const MAX_CHARS = 1200
 const HISTORY_FOR_AI = 20
-const FALLBACK_REPLY = "Sorry, I can't help with that here. For anything about your vehicle, call Justin on +976 8885 6529."
-
-const aiConfigured = () => Boolean(process.env.ANTHROPIC_API_KEY)
-let client
-
-async function askClaude(messages) {
-  client ??= new Anthropic()
-  const request = {
-    model: MODEL,
-    max_tokens: 4000,
-    system: [{ type: 'text', text: CHAT_SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-    messages,
-  }
-
-  // Opus 5: low effort suits short chat replies; server-side fallbacks retry on another model if one declines.
-  const response = MODEL.startsWith('claude-opus-5')
-    ? await client.beta.messages.create({
-        ...request,
-        output_config: { effort: 'low' },
-        betas: ['server-side-fallback-2026-07-01'],
-        fallbacks: 'default',
-      })
-    : await client.messages.create(request)
-
-  if (response.stop_reason === 'refusal') return FALLBACK_REPLY
-  const reply = response.content
-    .filter((block) => block.type === 'text')
-    .map((block) => block.text)
-    .join('')
-    .trim()
-  return reply || FALLBACK_REPLY
-}
 
 // Visitor turns become user messages; the AI's and Justin's replies become assistant messages.
-function toClaudeMessages(messages) {
+function toHistory(messages) {
   const history = messages
     .slice(-HISTORY_FOR_AI)
     .map((message) => ({ role: message.role === 'visitor' ? 'user' : 'assistant', content: message.text }))
@@ -130,10 +95,11 @@ async function postMessage(req, res) {
     await addMessage(conversation.id, 'ai', quickAnswer)
   } else if (conversation.ai && aiConfigured()) {
     try {
-      const reply = await askClaude(toClaudeMessages(await getMessages(conversation.id)))
+      const reply = await askAI(toHistory(await getMessages(conversation.id)))
       await addMessage(conversation.id, 'ai', reply)
     } catch (error) {
-      console.error('Chat AI error:', error instanceof Anthropic.APIError ? `${error.status} ${error.message}` : error)
+      // e.g. the free tier's daily limit is used up: the visitor's message is saved and Justin replies.
+      console.error('Chat AI error:', error?.status ?? '', error?.message ?? error)
       notice = "The assistant couldn't answer just now. Justin will see your message and reply here."
     }
   }
