@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { CalendarX2, CalendarCheck2 } from 'lucide-react'
 import { adminApi } from './adminApi'
 import {
-  BOOKING_DAYS_AHEAD, HOURS_TEXT, SLOTS, addDays, formatLongDay, garageNow, isOpenDay,
+  BOOKING_DAYS_AHEAD, HOURS_TEXT, SLOTS, addDays, formatLongDay, garageNow, isOpenDay, locksWholeDay,
 } from '../data/schedule'
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -12,7 +12,7 @@ const monthName = (date) => new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', 
 
 // Calendar where the admin marks days or single time slots as full.
 // Customers can't pick blocked days/times, and the server rejects them too.
-export default function AdminSchedule({ token, requests, onError }) {
+export default function AdminSchedule({ token, requests, onError, onReopen }) {
   const [state, setState] = useState({ status: 'loading', blocked: {}, now: garageNow() })
   const [selected, setSelected] = useState(null)
   const [saving, setSaving] = useState(false)
@@ -21,7 +21,7 @@ export default function AdminSchedule({ token, requests, onError }) {
     let active = true
     fetch('/api/availability')
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error('Could not load the schedule.'))))
-      .then((data) => active && setState({ status: 'ready', blocked: data.blocked, now: data.now }))
+      .then((data) => active && setState({ status: 'ready', blocked: data.adminBlocked ?? data.blocked, now: data.now }))
       .catch((err) => active && onError(err))
     return () => { active = false }
   }, [onError])
@@ -36,7 +36,8 @@ export default function AdminSchedule({ token, requests, onError }) {
   // Bookings per day and per slot, from the requests already loaded on the admin page.
   const bookings = {}
   for (const request of requests ?? []) {
-    if (!request.appointment || request.status === 'archived') continue
+    // Bookings that still hold their time (archived or reopened ones don't).
+    if (!request.appointment || request.status === 'archived' || request.appointment.reopened) continue
     ;(bookings[request.appointment.date] ??= []).push(request)
   }
 
@@ -44,7 +45,7 @@ export default function AdminSchedule({ token, requests, onError }) {
     setSaving(true)
     try {
       const data = await adminApi(token, 'availability', 'PUT', { body: { date, all, slots } })
-      setState((current) => ({ ...current, blocked: data.blocked }))
+      setState((current) => ({ ...current, blocked: data.adminBlocked ?? data.blocked }))
     } catch (err) {
       onError(err)
     } finally {
@@ -76,7 +77,8 @@ export default function AdminSchedule({ token, requests, onError }) {
             const closed = !isOpenDay(date)
             const value = blocked[date]
             const count = bookings[date]?.length ?? 0
-            const status = outside ? '' : closed ? 'Closed' : value === 'all' ? 'Full' : Array.isArray(value) ? `${value.length} blocked` : 'Open'
+            const dayBooked = (bookings[date] ?? []).some((request) => locksWholeDay(request.appointment.time))
+            const status = outside ? '' : closed ? 'Closed' : value === 'all' ? 'Full' : dayBooked ? 'Full · booked' : Array.isArray(value) ? `${value.length} blocked` : 'Open'
             return (
               <button
                 key={date}
@@ -125,19 +127,20 @@ export default function AdminSchedule({ token, requests, onError }) {
             <div className="admin-slot-grid">
               {SLOTS.map((time) => {
                 const isBlocked = dayFull || blockedSlots.includes(time)
-                const booked = (bookings[selected] ?? []).filter((request) => request.appointment.time === time).length
+                const holder = (bookings[selected] ?? []).find((request) => request.appointment.time === time)
+                const dayTaken = !holder && (bookings[selected] ?? []).some((request) => locksWholeDay(request.appointment.time))
                 return (
                   <button
                     key={time}
                     type="button"
-                    className={`admin-slot${isBlocked ? ' is-blocked' : ''}`}
+                    className={`admin-slot${isBlocked ? ' is-blocked' : holder ? ' is-booked' : ''}`}
                     aria-pressed={isBlocked}
                     disabled={dayFull || saving}
                     onClick={() => toggleSlot(time)}
-                    title={isBlocked ? 'Blocked: click to open' : 'Open: click to block'}
+                    title={holder ? `Booked by ${holder.name}` : isBlocked ? 'Blocked: click to open' : 'Open: click to block'}
                   >
                     <strong>{time}</strong>
-                    <small>{isBlocked ? 'Blocked' : 'Open'}{booked ? ` · ${booked} booked` : ''}</small>
+                    <small>{holder ? `Booked · ${holder.name.split(' ')[0]}` : isBlocked ? 'Blocked' : dayTaken ? 'Day booked' : 'Open'}</small>
                   </button>
                 )
               })}
@@ -154,6 +157,9 @@ export default function AdminSchedule({ token, requests, onError }) {
                     <li key={request.id}>
                       <strong>{request.appointment.time}</strong> {request.name} · {request.service || 'General enquiry'}
                       <a href={`tel:${request.phone.replace(/[^\d+]/g, '')}`}>{request.phone}</a>
+                      <button type="button" className="admin-reopen" onClick={() => onReopen(request)} title="The customer can't come: make this time bookable again">
+                        Reopen time
+                      </button>
                     </li>
                   ))}
               </ul>

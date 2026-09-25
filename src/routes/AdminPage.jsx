@@ -80,7 +80,7 @@ function StatusBadge({ status }) {
   return <span className={`admin-status admin-status-${stage.tone}`}>{stage.label}</span>
 }
 
-function RequestCard({ request, fresh, onStatus, onDelete }) {
+function RequestCard({ request, fresh, onStatus, onDelete, onReopen }) {
   const isNew = request.status === 'new'
   const next = NEXT_STEP[request.status]
   const NextIcon = next?.icon
@@ -103,9 +103,18 @@ function RequestCard({ request, fresh, onStatus, onDelete }) {
       </header>
 
       {request.appointment && (
-        <p className="admin-appointment">
-          <CalendarClock size={16} /> {formatLongDay(request.appointment.date)} at <strong>{request.appointment.time}</strong>
-        </p>
+        <div className="admin-appointment-row">
+          <p className={`admin-appointment${request.appointment.reopened ? ' is-reopened' : ''}`}>
+            <CalendarClock size={16} /> {formatLongDay(request.appointment.date)} at <strong>{request.appointment.time}</strong>
+          </p>
+          {request.appointment.reopened ? (
+            <span className="admin-reopened-note">Time reopened for other customers</span>
+          ) : request.status !== 'archived' && (
+            <button type="button" className="admin-reopen" onClick={() => onReopen(request)} title="The customer can't come: make this time bookable again">
+              Reopen time
+            </button>
+          )}
+        </div>
       )}
 
       <div className="admin-contact">
@@ -404,6 +413,19 @@ function AdminPage() {
     }
   }
 
+  // The customer can't come: free their booked time so other customers can book it.
+  const reopenSlot = async (request) => {
+    const { date, time } = request.appointment
+    if (!window.confirm(`Reopen ${formatLongDay(date)} at ${time}? ${request.name}'s request stays, but other customers can book this time again.`)) return
+    setRequests((list) => list.map((item) => (item.id === request.id ? { ...item, appointment: { ...item.appointment, reopened: true } } : item)))
+    try {
+      await adminApi(token, 'requests', 'PATCH', { body: { id: request.id, reopenSlot: true } })
+    } catch (err) {
+      handleError(err)
+      refresh()
+    }
+  }
+
   const deleteRequest = async (request) => {
     if (!window.confirm(`Delete the request from ${request.name} forever? It will be gone from the saved records. This cannot be undone.`)) return
     setRequests((list) => list.filter((item) => item.id !== request.id))
@@ -513,7 +535,7 @@ function AdminPage() {
         {view === 'reviews' ? (
           <AdminReviews token={token} reviews={reviews} onChange={setReviews} onError={handleError} />
         ) : view === 'schedule' ? (
-          <AdminSchedule token={token} requests={requests} onError={handleError} />
+          <AdminSchedule token={token} requests={requests} onError={handleError} onReopen={reopenSlot} />
         ) : view === 'chats' ? (
           <AdminChats
             token={token}
@@ -558,7 +580,7 @@ function AdminPage() {
 
             <div className="admin-list">
               {visible.map((request) => (
-                <RequestCard key={request.id} request={request} fresh={freshIds.has(request.id)} onStatus={updateStatus} onDelete={deleteRequest} />
+                <RequestCard key={request.id} request={request} fresh={freshIds.has(request.id)} onStatus={updateStatus} onDelete={deleteRequest} onReopen={reopenSlot} />
               ))}
             </div>
           </>

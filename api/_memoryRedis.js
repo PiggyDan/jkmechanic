@@ -47,7 +47,7 @@ function save() {
 
 load()
 
-const READ_ONLY = new Set(['GET', 'MGET', 'HGETALL', 'LRANGE', 'ZRANGE', 'SMEMBERS'])
+const READ_ONLY = new Set(['GET', 'MGET', 'HGET', 'HGETALL', 'LRANGE', 'ZRANGE', 'SMEMBERS'])
 
 // Redis-style inclusive range with negative indexes counting from the end.
 function range(items, start, stop) {
@@ -105,6 +105,14 @@ function run([command, ...args]) {
       }
       return added
     }
+    case 'HSETNX': {
+      if (!hashes.has(key)) hashes.set(key, new Map())
+      if (hashes.get(key).has(args[1])) return 0
+      hashes.get(key).set(args[1], String(args[2]))
+      return 1
+    }
+    case 'HGET':
+      return hashes.get(key)?.get(args[1]) ?? null
     case 'HDEL':
       return args.slice(1).filter((field) => hashes.get(key)?.delete(field)).length
     case 'HGETALL':

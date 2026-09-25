@@ -7,6 +7,10 @@ export const HOURS_SHORT = 'Mon–Fri 9:00–18:00'
 // Appointment start times; the last one leaves an hour before closing.
 export const SLOTS = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']
 export const BOOKING_DAYS_AHEAD = 42
+// A booking at this time or later takes the whole day (no other bookings that day).
+// Earlier (morning) bookings only take their own time.
+export const DAY_LOCK_FROM = '12:00'
+export const locksWholeDay = (time) => time >= DAY_LOCK_FROM
 // Same-day bookings need at least this much notice.
 const MIN_NOTICE_MINUTES = 60
 

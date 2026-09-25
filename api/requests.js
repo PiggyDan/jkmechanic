@@ -1,10 +1,12 @@
 // POST   /api/requests          — public: save a booking/contact request (optional appointment: { date, time })
 // GET    /api/requests          — admin: list the latest requests
 // PATCH  /api/requests          — admin: { id, status } — a workshop stage from src/data/requestStatus.js (archived = hidden but kept)
+//                                  or { id, reopenSlot: true } — the customer can't come: free their booked time
+// A booking with a day/time holds that slot automatically (see _availability.js).
 // DELETE /api/requests?id=...   — admin: remove a request
 import { randomUUID } from 'node:crypto'
 import { KEYS, clientIp, redis, redisConfigured, requireAdmin, sendEmailCopy, underRateLimit } from './_lib.js'
-import { getBlocked } from './_availability.js'
+import { getUnavailable, holdSlot, releaseSlot } from './_availability.js'
 import { notifyStaff } from './_push.js'
 import { logActivity } from './_activity.js'
 import { appointmentProblem } from '../src/data/schedule.js'
@@ -47,11 +49,15 @@ async function createRequest(req, res) {
   let appointment
   if (body.appointment) {
     appointment = { date: text(body.appointment.date, 10), time: text(body.appointment.time, 5) }
-    const problem = appointmentProblem(appointment, await getBlocked())
+    const problem = appointmentProblem(appointment, await getUnavailable())
     if (problem) return res.status(409).json({ error: problem, field: 'appointment' })
   }
 
   const entry = { id: randomUUID(), createdAt: Date.now(), status: 'new', ...submission, ...(appointment && { appointment }) }
+  // Hold the time for this customer. Set-if-empty, so if two people book the same slot at once, only one wins.
+  if (appointment && !(await holdSlot(appointment, entry.id))) {
+    return res.status(409).json({ error: 'Sorry, someone just booked that time. Please choose another time.', field: 'appointment' })
+  }
   await redis(
     ['SET', KEYS.request(entry.id), JSON.stringify(entry)],
     ['ZADD', KEYS.index, entry.createdAt, entry.id],
@@ -91,23 +97,43 @@ async function listRequests(res) {
 }
 
 async function updateRequest(req, res) {
-  const { id, status } = req.body || {}
-  if (typeof id !== 'string' || !STATUS_VALUES.includes(status)) {
+  const { id, status, reopenSlot } = req.body || {}
+  if (typeof id !== 'string' || (reopenSlot !== true && !STATUS_VALUES.includes(status))) {
     return res.status(400).json({ error: 'Invalid update.' })
   }
 
   const [value] = await redis(['GET', KEYS.request(id)])
   if (!value) return res.status(404).json({ error: 'Request not found.' })
+  const entry = JSON.parse(value)
 
-  const entry = { ...JSON.parse(value), status, statusAt: Date.now() }
+  if (reopenSlot) {
+    // The customer can't come: free the time so others can book it. The request itself is kept.
+    if (entry.appointment && !entry.appointment.reopened) {
+      await releaseSlot(entry.appointment, id)
+      entry.appointment = { ...entry.appointment, reopened: true }
+    }
+  } else {
+    const wasArchived = normalizeStatus(entry.status) === 'archived'
+    entry.status = status
+    entry.statusAt = Date.now()
+    if (entry.appointment && !entry.appointment.reopened) {
+      // Archiving frees the time; restoring takes it back if nobody has booked it meanwhile.
+      if (status === 'archived') await releaseSlot(entry.appointment, id)
+      else if (wasArchived && !(await holdSlot(entry.appointment, id))) entry.appointment = { ...entry.appointment, reopened: true }
+    }
+  }
+
   await redis(['SET', KEYS.request(id), JSON.stringify(entry)])
-  return res.status(200).json({ request: entry })
+  return res.status(200).json({ request: { ...entry, status: normalizeStatus(entry.status) } })
 }
 
 async function deleteRequest(req, res) {
   const { id } = req.query
   if (typeof id !== 'string' || !id) return res.status(400).json({ error: 'Missing id.' })
 
+  const [value] = await redis(['GET', KEYS.request(id)])
+  const appointment = value ? JSON.parse(value).appointment : null
+  if (appointment) await releaseSlot(appointment, id) // deleting a booking frees its time
   await redis(['DEL', KEYS.request(id)], ['ZREM', KEYS.index, id])
   return res.status(200).json({ ok: true })
 }

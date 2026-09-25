@@ -1369,3 +1369,59 @@
 .admin-tabs button {
   white-space: nowrap;
 }
+
+/* Booked times (held automatically by a customer's booking) */
+.admin-appointment-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+
+.admin-appointment-row .admin-appointment {
+  margin: 0;
+}
+
+.admin-appointment.is-reopened {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.admin-reopened-note {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.admin-reopen {
+  padding: 5px 12px;
+  border: 1px solid rgba(249, 115, 22, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gold);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-reopen:hover {
+  background: rgba(249, 115, 22, 0.12);
+}
+
+.admin-day-bookings .admin-reopen {
+  margin-left: auto;
+}
+
+.admin-slot.is-booked {
+  border-color: rgba(59, 130, 246, 0.45);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.admin-slot.is-booked small {
+  color: #2563eb;
+}
+
+[data-theme='dark'] .admin-slot.is-booked small {
+  color: #93c5fd;
+}
