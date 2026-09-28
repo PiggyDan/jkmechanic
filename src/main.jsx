@@ -13,6 +13,7 @@ import ChatWidget from './components/ChatWidget.jsx'
 import InstallPrompt from './components/InstallPrompt.jsx'
 import MobileBar from './components/MobileBar.jsx'
 import { registerServiceWorker } from './lib/pwa'
+import './light.css'
 
 registerServiceWorker()
 

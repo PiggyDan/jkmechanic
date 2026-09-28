@@ -1,0 +1,82 @@
+/* Day mode: clean, modern look. Neutral greys, white cards with crisp borders and soft
+   shadows, dark text. Night mode is untouched. Loaded after the other stylesheets. */
+
+:root[data-theme='light'] {
+  --heading: #0b1220;
+  --text: #1f2937;
+  --muted: #5b6475;
+  --gold: #b45309;
+  --surface: #ffffff;
+  --card: #f6f7f9;
+  --field: #ffffff;
+  --shadow: rgba(15, 23, 42, 0.06);
+  --line: #e6e8ec;
+  background: #f3f4f6;
+}
+
+[data-theme='light'] .home,
+[data-theme='light'] .luxury-page {
+  --line: #e6e8ec;
+}
+
+/* Header: white bar with a hairline border. */
+[data-theme='light'] .topbar {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e6e8ec;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.05);
+  backdrop-filter: blur(12px);
+}
+
+[data-theme='light'] .messenger-button,
+[data-theme='light'] .header-call,
+[data-theme='light'] .header-actions .theme-toggle {
+  border-color: #e2e5ea;
+  background: #fff;
+}
+
+/* Cards and sections: white, crisp, soft layered shadow. */
+[data-theme='light'] .home-section,
+[data-theme='light'] .home-strengths,
+[data-theme='light'] .detail-cta,
+[data-theme='light'] .booking-panel {
+  background: #fff;
+  border-color: #e6e8ec;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px rgba(15, 23, 42, 0.06);
+}
+
+/* Home banner: plain white instead of the beige wash. */
+[data-theme='light'] .home-hero {
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 18px 48px rgba(15, 23, 42, 0.07);
+}
+
+[data-theme='light'] .home-hero::before {
+  background: none;
+}
+
+[data-theme='light'] .home-facts {
+  background: #f8f9fb;
+  border-color: #e6e8ec;
+}
+
+/* Form fields: white with a clear border and an orange focus ring. */
+[data-theme='light'] input,
+[data-theme='light'] select,
+[data-theme='light'] textarea {
+  border-color: #dfe3e8;
+}
+
+[data-theme='light'] input:focus-visible,
+[data-theme='light'] select:focus-visible,
+[data-theme='light'] textarea:focus-visible {
+  border-color: #f59e0b;
+  outline: 3px solid rgba(245, 158, 11, 0.2);
+  outline-offset: 0;
+}
+
+/* Service-page call to action: no orange wash. */
+[data-theme='light'] .detail-cta-chat {
+  background: #fff;
+  border-color: #dfe3e8;
+}
