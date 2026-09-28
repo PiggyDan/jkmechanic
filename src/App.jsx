@@ -16,6 +16,7 @@ import AppointmentPicker from './components/AppointmentPicker'
 import { galleryPhotos } from './data/gallery'
 import BrandMark from './components/BrandMark'
 import heroTruck from './assets/hero-truck.webp'
+import heroTruckRed from './assets/hero-truck-red.webp'
 
 
 const MAP_EMBED = 'https://maps.google.com/maps?q=47.9290974,107.1572345&z=15&output=embed'
@@ -108,16 +109,17 @@ function App() {
             <h1 id="home-title">We fix cars in Gachuurt.</h1>
             <p>
               Small garage, just outside UB. Oil changes, brakes, suspension, engines.
-              We'll take a look and tell you straight what it needs.
+              Justin will look at your vehicle and tell you straight what it needs.
             </p>
             <p>Cars, trucks and 4x4s all welcome.</p>
             <div className="home-actions">
               <BookButton className="primary-button">Book a visit</BookButton>
-              <a className="home-ghost-button" href="tel:+97688856529"><Phone size={16} /> +976 8885 6529</a>
+              <a className="primary-button home-call-button" href="tel:+97688856529" aria-label="Call +976 8885 6529"><Phone size={18} /> Call us</a>
             </div>
           </div>
 
-          <img className="home-hero-truck" src={heroTruck} alt="Orange ZIL truck" width="441" height="242" />
+          <img className="home-hero-truck home-hero-truck-night" src={heroTruck} alt="ZIL truck" width="441" height="242" />
+          <img className="home-hero-truck home-hero-truck-day" src={heroTruckRed} alt="Red ZIL truck" width="441" height="242" />
 
           <dl className="home-facts">
             <a className="home-fact" href="#reviews">

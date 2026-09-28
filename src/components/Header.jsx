@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import ThemeToggle from '../../components/ThemeToggle.jsx'
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle, Phone } from 'lucide-react'
 import BookButton from './BookButton'
 import { openChat } from '../lib/chat'
 import BrandMark from './BrandMark'
@@ -28,6 +28,9 @@ export default function Header() {
           <MessageCircle size={18} className="messenger-icon" aria-hidden="true" />
           Chat
         </button>
+        <a className="header-call" href="tel:+97688856529" aria-label="Call +976 8885 6529" title="Call us">
+          <Phone size={18} aria-hidden="true" />
+        </a>
         <BookButton className="pill-button" />
       </div>
     </header>

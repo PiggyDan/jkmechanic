@@ -59,9 +59,10 @@
     color: #111827;
   }
 
-  /* The bar has Chat and Book, so the floating bubble and the header's copies aren't needed on phones. */
+  /* The bar has Call, Chat and Book, so the floating bubble and the header's copies aren't needed on phones. */
   .chat-launcher,
   .topbar .messenger-button,
+  .topbar .header-call,
   .topbar .header-actions .pill-button {
     display: none;
   }
