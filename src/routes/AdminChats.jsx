@@ -122,7 +122,7 @@ function Thread({ token, id, aiAvailable, onBack, onChanged, onError }) {
           onKeyDown={(event) => {
             if (event.key === 'Enter' && !event.shiftKey) send(event)
           }}
-          placeholder="Reply as Justin…"
+          placeholder="Reply as Jkmechanic…"
           rows={2}
           maxLength={2000}
           aria-label="Your reply"

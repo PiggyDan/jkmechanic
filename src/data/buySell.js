@@ -5,7 +5,7 @@
 export const SELL_COMMISSION = null
 
 export const reasons = [
-  { icon: 'Wrench', title: 'A mechanic looks at the car', text: 'Justin checks the vehicle the way a workshop does, not the way a seller describes it. Problems show up before money changes hands.' },
+  { icon: 'Wrench', title: 'A mechanic looks at the car', text: 'Jkmechanic checks the vehicle the way a workshop does, not the way a seller describes it. Problems show up before money changes hands.' },
   { icon: 'HandCoins', title: 'Honest prices', text: 'Prices are based on the real condition of the car and what similar cars sell for in Mongolia, not on hope or pressure.' },
   { icon: 'CalendarRange', title: 'Your time saved', text: 'Calls, viewings, test drives and back-and-forth with strangers: we handle the tiring parts for you.' },
   { icon: 'FileText', title: 'Paperwork and handover', text: 'Help with sale documents, ownership transfer steps and a clean handover, so the deal finishes properly.' },
@@ -28,7 +28,7 @@ export const buySteps = [
 ]
 
 export const sellSteps = [
-  { icon: 'ClipboardCheck', title: 'Check and value', text: 'Justin inspects the car and we agree a realistic asking price together.' },
+  { icon: 'ClipboardCheck', title: 'Check and value', text: 'Jkmechanic inspects the car and we agree a realistic asking price together.' },
   { icon: 'Sparkles', title: 'Prepare the car', text: 'Small fixes and a proper clean often pay for themselves in a faster, better sale.' },
   { icon: 'Megaphone', title: 'Find buyers', text: 'We list the car, answer the calls and show it to serious buyers by arrangement.' },
   { icon: 'Handshake', title: 'Close the deal', text: 'Negotiation, sale documents and handover, handled with you step by step.' },

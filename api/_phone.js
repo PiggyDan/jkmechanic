@@ -1,5 +1,5 @@
 // Finds a phone number in free text, so a number a visitor types in the chat is saved
-// for Justin automatically. Accepts Mongolian 8-digit numbers (with or without +976)
+// for the garage automatically. Accepts Mongolian 8-digit numbers (with or without +976)
 // and international numbers written with a leading +. Years, prices and mileage don't match.
 const CANDIDATE = /\+?\d[\d\s().-]{5,20}\d/g
 

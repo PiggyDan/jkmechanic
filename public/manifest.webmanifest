@@ -1,7 +1,7 @@
 {
   "name": "Garage 84 · JK Mechanic",
   "short_name": "Garage 84",
-  "description": "Book repairs, buy or sell a car, and chat with Justin at Garage 84 in Gachuurt, Ulaanbaatar.",
+  "description": "Book repairs, buy or sell a car, and chat with Jkmechanic Shop in Gachuurt, Ulaanbaatar.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
@@ -16,6 +16,6 @@
   ],
   "shortcuts": [
     { "name": "Book a repair", "url": "/services/vehicle-repair-shop#booking", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Chat with Justin", "url": "/?chat=1", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+    { "name": "Chat with Jkmechanic", "url": "/?chat=1", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
   ]
 }

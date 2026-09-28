@@ -37,7 +37,7 @@
   overflow: hidden;
   isolation: isolate;
   color: #e2e8f0;
-  background: #0b1120 var(--hero-image) center / cover no-repeat;
+  background: #0b1120;
   box-shadow: 0 30px 70px var(--shadow);
 }
 
@@ -52,7 +52,24 @@
 }
 
 .home-hero-copy {
+  position: relative;
   max-width: 640px;
+}
+
+/* Cut-out truck sitting on the right, with a soft ground shadow so it blends into the dark hero. */
+.home-hero-truck {
+  position: absolute;
+  right: clamp(8px, 3vw, 48px);
+  top: 50%;
+  z-index: -1;
+  width: min(54%, 660px);
+  height: auto;
+  transform: translateY(-62%);
+  filter: grayscale(1) brightness(0.62) contrast(1.05) drop-shadow(0 26px 22px rgba(0, 0, 0, 0.6));
+  opacity: 0.85;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 10%);
+  pointer-events: none;
 }
 
 .home-hero .home-kicker {
@@ -62,10 +79,11 @@
 .home .home-hero h1 {
   margin: 0;
   color: #f8fafc;
-  font-size: clamp(2.6rem, 6vw, 5.2rem);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 600;
   font-stretch: 100%;
-  line-height: 0.98;
-  letter-spacing: -0.015em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
@@ -674,6 +692,14 @@
     background: linear-gradient(180deg, rgba(8, 12, 20, 0.8) 0%, rgba(8, 12, 20, 0.92) 100%);
   }
 
+  .home-hero-truck {
+    position: static;
+    justify-self: center;
+    width: min(108%, 440px);
+    margin: -8px 0 -12px;
+    transform: none;
+  }
+
   .home-facts {
     grid-template-columns: 1fr;
   }
@@ -713,4 +739,9 @@
   .home-service-row {
     gap: 12px;
   }
+}
+
+/* Second intro paragraph in the hero */
+.home-hero-copy > p + p {
+  margin-top: 12px;
 }

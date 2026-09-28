@@ -1,6 +1,6 @@
 // Storage for website chat conversations.
-// jk:chat:<id>    hash  createdAt, updatedAt, ai ('1' AI replies / '0' Justin handles it), unread, last, lastRole,
-//                       contactName, contactPhone (so Justin can call the visitor back)
+// jk:chat:<id>    hash  createdAt, updatedAt, ai ('1' AI replies / '0' the garage handles it), unread, last, lastRole,
+//                       contactName, contactPhone (so the garage can call the visitor back)
 // jk:chat:<id>:m  list  JSON messages { id, role: 'visitor' | 'ai' | 'admin', text, at }
 // jk:chats        zset  conversation ids scored by last activity
 // Conversations are kept until deleted in the admin (no automatic expiry).

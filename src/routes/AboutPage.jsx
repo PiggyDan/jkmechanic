@@ -13,7 +13,7 @@ const benefits = [
 const approach = [
   {
     title: 'Bring the vehicle in',
-    text: 'Tell Justin what is happening, from a small leak to a worn suspension. He will look at the vehicle and explain what needs doing.',
+    text: 'Tell us what is happening, from a small leak to a worn suspension. We will look at the vehicle and explain what needs doing.',
   },
   {
     title: 'Relax or head into town',
@@ -41,11 +41,11 @@ function AboutPage() {
 
           <div className="about-copy">
             <span className="eyebrow dark">About JK Mongolia</span>
-            <h1 id="about-title">An auto repair shop in Gachuurt, run by Justin.</h1>
+            <h1 id="about-title">A small auto repair shop in Gachuurt.</h1>
             <p>
               Jkmechanic Shop, also called Garage 84, is an independent auto repair
-              shop in Gachuurt, just outside Ulaanbaatar. Justin handles every job
-              himself, from a routine oil change to taking out a whole engine.
+              shop in Gachuurt, just outside Ulaanbaatar. We handle every job
+              ourselves, from a routine oil change to taking out a whole engine.
             </p>
             <p>
               Local drivers and overland travellers come to us for the same thing:

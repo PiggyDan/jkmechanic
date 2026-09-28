@@ -15,9 +15,8 @@ import CustomerReviews from './components/CustomerReviews'
 import AppointmentPicker from './components/AppointmentPicker'
 import { galleryPhotos } from './data/gallery'
 import BrandMark from './components/BrandMark'
+import heroTruck from './assets/hero-truck.webp'
 
-// The first gallery photo becomes the hero background once photos are added.
-const heroImage = galleryPhotos[0] ?? 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=80'
 
 const MAP_EMBED = 'https://maps.google.com/maps?q=47.9290974,107.1572345&z=15&output=embed'
 
@@ -103,20 +102,22 @@ function App() {
       <Header />
 
       <main>
-        <section className="home-hero reveal" aria-labelledby="home-title" style={{ '--hero-image': `url(${heroImage})` }}>
+        <section className="home-hero reveal" aria-labelledby="home-title">
           <div className="home-hero-copy">
-            <span className="home-kicker">Garage 84 · Gachuurt, Ulaanbaatar</span>
-            <h1 id="home-title">Honest repairs for trucks, 4x4s and overland rigs.</h1>
+            <span className="home-kicker">Jkmechanic Shop · Gachuurt, Ulaanbaatar</span>
+            <h1 id="home-title">We fix cars in Gachuurt.</h1>
             <p>
-              Jkmechanic Shop is an independent workshop just outside Ulaanbaatar.
-              Justin handles everything from a quick oil change to taking out a
-              whole engine, and he explains the work as he goes.
+              Small garage, just outside UB. Oil changes, brakes, suspension, engines.
+              We'll take a look and tell you straight what it needs.
             </p>
+            <p>Cars, trucks and 4x4s all welcome.</p>
             <div className="home-actions">
               <BookButton className="primary-button">Book a visit</BookButton>
               <a className="home-ghost-button" href="tel:+97688856529"><Phone size={16} /> +976 8885 6529</a>
             </div>
           </div>
+
+          <img className="home-hero-truck" src={heroTruck} alt="Orange ZIL truck" width="441" height="242" />
 
           <dl className="home-facts">
             <a className="home-fact" href="#reviews">
@@ -125,7 +126,7 @@ function App() {
             </a>
             <div className="home-fact">
               <dt>Experience</dt>
-              <dd><strong>20+ years</strong> <small>in Mongolian automotive work</small></dd>
+              <dd><strong>20+ years</strong> <small>working on cars in Mongolia</small></dd>
             </div>
             <div className="home-fact">
               <dt>Hours</dt>
@@ -167,7 +168,7 @@ function App() {
             <h2 id="travel-title">Driving across Mongolia? Stop at Garage 84.</h2>
             <p>
               Travellers heading for China, Russia and Central Asia stop here to
-              get their vehicles fixed. Justin has fitted new shock absorbers to a
+              get their vehicles fixed. We have fitted new shock absorbers to a
               Steyr expedition truck and fixed many small faults on a 1980 Land Rover.
             </p>
           </div>
@@ -230,7 +231,7 @@ function App() {
           {status.state === 'sent' ? (
             <div className="home-form home-form-done" role="status">
               <h3>Request sent. Thank you!</h3>
-              <p>Justin will contact you by phone to confirm a time. For anything urgent, call +976 8885 6529.</p>
+              <p>Jkmechanic will contact you by phone to confirm a time. For anything urgent, call +976 8885 6529.</p>
               <button type="button" className="secondary-button" onClick={() => setStatus({ state: 'idle', error: '' })}>
                 Send another request
               </button>

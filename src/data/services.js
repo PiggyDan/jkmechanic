@@ -114,7 +114,7 @@ export const services = [
     summary:
       'Buying: a mechanic checks the car before you pay. Selling: an honest price, buyers found for you, and the paperwork handled.',
     intro:
-      'Buying: Justin inspects and test-drives the cars you are considering and tells you what is wrong, what repairs would cost, and whether the price is fair. Selling: we check the car, agree a realistic asking price based on its condition and the Mongolian market, prepare it, find serious buyers, show the car by arrangement, and help with the sale documents and handover. The selling fee is a percentage of the final sale price, agreed before we start. Buying help is quoted per job.',
+      'Buying: Jkmechanic inspects and test-drives the cars you are considering and tells you what is wrong, what repairs would cost, and whether the price is fair. Selling: we check the car, agree a realistic asking price based on its condition and the Mongolian market, prepare it, find serious buyers, show the car by arrangement, and help with the sale documents and handover. The selling fee is a percentage of the final sale price, agreed before we start. Buying help is quoted per job.',
     overview: [
       'Pre-purchase inspection and test drive',
       'Honest valuation of your car',
@@ -131,7 +131,7 @@ export const services = [
     ],
     process: [
       { title: 'Tell us your goal', description: 'Buying or selling, the car, and your budget or price in mind.' },
-      { title: 'Check the car', description: 'Justin inspects it as a mechanic and we look at what similar cars sell for.' },
+      { title: 'Check the car', description: 'Jkmechanic inspects it as a mechanic and we look at what similar cars sell for.' },
       { title: 'Close the deal', description: 'Negotiate with facts, then finish paperwork and handover properly.' },
     ],
     formTitle: 'Tell us what you want to buy or sell',
@@ -160,7 +160,7 @@ export const services = [
       'Day trips and multi-day trips around Mongolia',
       'Help planning the route for overland travellers',
       'Price agreed by phone before the trip, based on distance and days',
-      'One request form for all trips; Justin calls to confirm',
+      'One request form for all trips; Jkmechanic calls to confirm',
     ],
     process: [
       {
@@ -169,7 +169,7 @@ export const services = [
       },
       {
         title: 'We confirm by phone',
-        description: 'Justin calls you with the price and the details before anything is booked.',
+        description: 'Jkmechanic calls you with the price and the details before anything is booked.',
       },
       {
         title: 'Your driver arrives',
@@ -177,7 +177,7 @@ export const services = [
       },
     ],
     formTitle: 'Book a driver or transfer',
-    formIntro: 'Tell us about your trip. Justin will call you to confirm the price and details.',
+    formIntro: 'Tell us about your trip. Jkmechanic will call you to confirm the price and details.',
     formFields: [
       { name: 'name', label: 'Name', type: 'text', placeholder: 'Your name', required: true },
       { name: 'phone', label: 'Phone', type: 'tel', placeholder: '+976 ... or your international number', required: true },

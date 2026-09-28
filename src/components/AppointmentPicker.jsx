@@ -88,7 +88,7 @@ export default function AppointmentPicker({ value, onChange, optional = false, r
 
       {optional && (
         <button type="button" className={`appt-any${!selectedDay ? ' selected' : ''}`} aria-pressed={!selectedDay} onClick={clear}>
-          No preference, Justin will suggest a time
+          No preference, we will suggest a time
         </button>
       )}
 

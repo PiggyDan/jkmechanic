@@ -84,7 +84,7 @@ function BuySellPage() {
             <span className="home-kicker">Buy a car · Sell a car</span>
             <h1 id="buysell-title">Buy or sell a car without the guesswork.</h1>
             <p>
-              A used car is only as good as its real condition. Justin checks cars as a mechanic,
+              A used car is only as good as its real condition. Jkmechanic checks cars as a mechanic,
               so buyers know what they are paying for and sellers get a fair price, faster.
             </p>
             <div className="home-actions">
@@ -207,8 +207,8 @@ function BuySellPage() {
             <h2 id="form-title">{goal === 'buy' ? 'Tell us what you are looking for.' : 'Tell us about your car.'}</h2>
             <p className="buysell-lead">
               {goal === 'buy'
-                ? 'Send the details and Justin will call you to talk through options and next steps.'
-                : 'Send the details and Justin will call you to arrange a check and talk through the price.'}
+                ? 'Send the details and Jkmechanic will call you to talk through options and next steps.'
+                : 'Send the details and Jkmechanic will call you to arrange a check and talk through the price.'}
             </p>
             <a className="buysell-call" href="tel:+97688856529"><Phone size={18} /> Prefer to talk? +976 8885 6529</a>
           </div>
@@ -216,7 +216,7 @@ function BuySellPage() {
           {status.state === 'sent' ? (
             <div className="home-form home-form-done" role="status">
               <h3>Thank you, we got it!</h3>
-              <p>Justin will call you soon. For anything urgent, call +976 8885 6529.</p>
+              <p>Jkmechanic will call you soon. For anything urgent, call +976 8885 6529.</p>
               <button type="button" className="secondary-button" onClick={() => setStatus({ state: 'idle', error: '' })}>Send another</button>
             </div>
           ) : (

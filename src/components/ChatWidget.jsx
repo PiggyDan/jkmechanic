@@ -10,7 +10,7 @@ const ID_KEY = 'jk-chat-id'
 const SEEN_KEY = 'jk-chat-seen'
 const OPEN_POLL_MS = 4000
 const CLOSED_POLL_MS = 30000
-const GREETING = "Hi! I'm the Garage 84 assistant, and Justin can also reply here himself. Ask about repairs, parts, storage, directions or booking. Сайн байна уу! Монголоор асууж болно."
+const GREETING = "Hi! I'm the Garage 84 assistant, and the Jkmechanic team can also reply here. Ask about repairs, parts, storage, directions or booking. Сайн байна уу! Монголоор асууж болно."
 const SUGGESTIONS = quickAnswers.map((item) => item.question)
 
 // Links the assistant may produce: internal pages, tel:, mailto:, Messenger and Google Maps.
@@ -43,7 +43,7 @@ const storage = {
   },
 }
 
-// Replies from the garage side (AI or Justin) — used for the unread badge.
+// Replies from the garage side (AI or staff) — used for the unread badge.
 const countReplies = (messages) => messages.filter((message) => message.role !== 'visitor').length
 
 export default function ChatWidget() {
@@ -93,7 +93,7 @@ export default function ChatWidget() {
     }
   }, [conversationId, applyConversation, forget])
 
-  // The installed app's "Chat with Justin" shortcut opens /?chat=1.
+  // The installed app's "Chat with us" shortcut opens /?chat=1.
   useEffect(() => {
     if (new URLSearchParams(location.search).get('chat') === '1') setOpen(true)  
   }, [location.search])
@@ -104,7 +104,7 @@ export default function ChatWidget() {
     return () => window.removeEventListener(OPEN_CHAT_EVENT, handleOpen)
   }, [])
 
-  // Poll for Justin's replies: every few seconds while open, occasionally while closed.
+  // Poll for the garage's replies: every few seconds while open, occasionally while closed.
   useEffect(() => {
     if (!conversationId) return undefined
     load()  
@@ -205,7 +205,7 @@ export default function ChatWidget() {
 
   const firstAdminIndex = messages.findIndex((message) => message.role === 'admin')
   const humanMode = !ai || firstAdminIndex !== -1
-  const waitingForJustin = !ai && !sending && messages.at(-1)?.role === 'visitor'
+  const waitingForReply = !ai && !sending && messages.at(-1)?.role === 'visitor'
   const hasVisitorMessage = messages.some((message) => message.role === 'visitor')
   const showCallback = hasVisitorMessage && !contact.phone && !callback.dismissed && !sending && (!ai || Boolean(notice))
 
@@ -224,7 +224,7 @@ export default function ChatWidget() {
             <BrandMark />
             <div>
               <strong>Jkmechanic Shop</strong>
-              <small>{humanMode ? 'Chatting with Justin' : 'AI assistant · Justin can join'}</small>
+              <small>{humanMode ? 'Chatting with Jkmechanic' : 'AI assistant · Jkmechanic can join'}</small>
             </div>
             {messages.length > 0 && <button type="button" className="chat-reset" onClick={reset}>New chat</button>}
             <button type="button" className="chat-close" onClick={() => setOpen(false)} aria-label="Close chat"><X size={18} /></button>
@@ -234,21 +234,21 @@ export default function ChatWidget() {
             <p className="chat-msg chat-msg-assistant">{GREETING}</p>
             {messages.map((message, index) => (
               <div key={message.id} className="chat-row">
-                {index === firstAdminIndex && <p className="chat-divider">Justin joined the chat</p>}
-                {message.role === 'admin' && <span className="chat-author">Justin · JK Mechanic</span>}
+                {index === firstAdminIndex && <p className="chat-divider">Jkmechanic joined the chat</p>}
+                {message.role === 'admin' && <span className="chat-author">Jkmechanic Shop</span>}
                 <p className={`chat-msg ${message.role === 'visitor' ? 'chat-msg-user' : 'chat-msg-assistant'}${message.role === 'admin' ? ' chat-msg-admin' : ''}`}>
                   {message.role === 'visitor' ? message.text : renderText(message.text, () => setOpen(false))}
                 </p>
               </div>
             ))}
             {sending && ai && <p className="chat-msg chat-msg-assistant chat-typing" aria-label="Assistant is typing"><span /><span /><span /></p>}
-            {waitingForJustin && (
-              <p className="chat-note">Justin will reply here. You can close this window and come back — your chat is saved on this device.</p>
+            {waitingForReply && (
+              <p className="chat-note">Jkmechanic will reply here. You can close this window and come back — your chat is saved on this device.</p>
             )}
             {notice && <p className="chat-note">{notice}</p>}
             {showCallback && (
               <form className="chat-callback" onSubmit={saveCallback}>
-                <strong><Phone size={15} aria-hidden="true" /> Want Justin to call you back?</strong>
+                <strong><Phone size={15} aria-hidden="true" /> Want us to call you back?</strong>
                 <input
                   value={callback.name}
                   onChange={(event) => setCallback((current) => ({ ...current, name: event.target.value }))}
@@ -276,7 +276,7 @@ export default function ChatWidget() {
             )}
             {contact.phone && hasVisitorMessage && (
               <p className="chat-note chat-note-ok">
-                <Phone size={13} aria-hidden="true" /> Justin can call you on <strong>{contact.phone}</strong>
+                <Phone size={13} aria-hidden="true" /> Jkmechanic can call you on <strong>{contact.phone}</strong>
               </p>
             )}
             {error && <p className="chat-error" role="alert">{error}</p>}
@@ -303,7 +303,7 @@ export default function ChatWidget() {
             <button type="submit" disabled={!input.trim() || sending} aria-label="Send"><Send size={18} /></button>
           </form>
           <p className="chat-foot">
-            {humanMode ? 'Replies come from Justin at Garage 84.' : 'AI can make mistakes.'} Urgent? Call <a href="tel:+97688856529">+976 8885 6529</a>.
+            {humanMode ? 'Replies come from Jkmechanic Shop.' : 'AI can make mistakes.'} Urgent? Call <a href="tel:+97688856529">+976 8885 6529</a>.
           </p>
         </section>
       )}

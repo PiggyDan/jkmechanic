@@ -34,7 +34,7 @@ function StarPicker({ value, onChange }) {
 }
 
 // Reviews written on this website: approved ones are listed, and anyone can write a new one.
-// New reviews wait for Justin's approval in /admin before they appear.
+// New reviews wait for the admin's approval in /admin before they appear.
 export default function CustomerReviews() {
   const [data, setData] = useState({ reviews: [], count: 0, average: null })
   const [open, setOpen] = useState(false)
@@ -112,7 +112,7 @@ export default function CustomerReviews() {
 
       {status.state === 'sent' ? (
         <p className="review-thanks" role="status">
-          <strong>Thank you for your review!</strong> It will appear here once Justin has checked it.
+          <strong>Thank you for your review!</strong> It will appear here once Jkmechanic has checked it.
         </p>
       ) : open && (
         <form className="review-form" onSubmit={submit}>
@@ -129,7 +129,7 @@ export default function CustomerReviews() {
           </div>
           <label>
             <span>Your review</span>
-            <textarea name="text" value={form.text} onChange={change} rows="4" minLength={10} maxLength={1500} placeholder="What did Justin fix, and how was the experience?" required />
+            <textarea name="text" value={form.text} onChange={change} rows="4" minLength={10} maxLength={1500} placeholder="What did we fix, and how was the experience?" required />
           </label>
           <div className="review-photos">
             <span className="review-photos-label">Photos <em>optional, up to {MAX_PHOTOS}</em></span>

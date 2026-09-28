@@ -1,12 +1,12 @@
 // The website chat's AI. Picks a provider from whichever key is set in Vercel:
 //   GEMINI_API_KEY     → Google Gemini (free tier available). Model: GEMINI_MODEL, default gemini-3.8-flash
 //   ANTHROPIC_API_KEY  → Claude. Model: CHAT_MODEL, default claude-opus-5
-// With neither key, there is no AI: visitors chat with Justin directly.
+// With neither key, there is no AI: visitors chat with the garage directly.
 import Anthropic from '@anthropic-ai/sdk'
 import { GoogleGenAI, ThinkingLevel } from '@google/genai'
 import { CHAT_SYSTEM_PROMPT } from './_chatPrompt.js'
 
-export const FALLBACK_REPLY = "Sorry, I can't help with that here. For anything about your vehicle, call Justin on +976 8885 6529."
+export const FALLBACK_REPLY = "Sorry, I can't help with that here. For anything about your vehicle, call Jkmechanic on +976 8885 6529."
 
 export function aiProvider() {
   if (process.env.GEMINI_API_KEY) return 'gemini'

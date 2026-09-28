@@ -1,7 +1,7 @@
 // Admin side of the website chat (requires the admin password).
 // GET    /api/chats           — list conversations, newest activity first
 // GET    /api/chats?id=...    — one conversation with its messages (marks it read)
-// POST   /api/chats           — { id, text }: reply as Justin (turns AI off for that chat)
+// POST   /api/chats           — { id, text }: reply as the garage (turns AI off for that chat)
 // PATCH  /api/chats           — { id, ai: boolean }: hand the chat back to the AI or take it over
 // DELETE /api/chats?id=...    — delete a conversation
 import { redisConfigured, requireAdmin } from './_lib.js'

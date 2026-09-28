@@ -1,7 +1,7 @@
 // Visitor side of the website chat.
-// POST /api/chat        { conversationId?, text }  — send a message; the AI answers unless Justin has taken over
+// POST /api/chat        { conversationId?, text }  — send a message; the AI answers unless the garage has taken over
 // POST /api/chat        { conversationId?, contact: { name, phone } }  — "call me back" details from the chat card
-// GET  /api/chat?id=... — fetch the conversation (the widget polls this to show Justin's replies)
+// GET  /api/chat?id=... — fetch the conversation (the widget polls this to show the garage's replies)
 // The conversation id is a random UUID that only this visitor's browser knows.
 import { clientIp, redisConfigured, underRateLimit } from './_lib.js'
 import { aiConfigured, askAI } from './_ai.js'
@@ -14,7 +14,7 @@ import { logActivity } from './_activity.js'
 const MAX_CHARS = 1200
 const HISTORY_FOR_AI = 20
 
-// Visitor turns become user messages; the AI's and Justin's replies become assistant messages.
+// Visitor turns become user messages; the AI's and the garage's replies become assistant messages.
 function toHistory(messages) {
   const history = messages
     .slice(-HISTORY_FOR_AI)
@@ -38,7 +38,7 @@ async function tellStaff(conversation, text) {
   await notifyStaff({ title: `Chat: ${who}`, body: text, path: `/admin/chat/${conversation.id}` })
 }
 
-// The "call me back" card: save name + number and add them to the conversation for Justin.
+// The "call me back" card: save name + number and add them to the conversation for the garage.
 async function saveContact(req, res, body) {
   const name = String(body.contact?.name ?? '').trim().slice(0, 60)
   const phone = findPhone(body.contact?.phone)
@@ -78,7 +78,7 @@ async function postMessage(req, res) {
   let conversation = await getConversation(body.conversationId)
   if (!conversation) conversation = await getConversation(await createConversation())
 
-  // A number typed anywhere in the chat is saved so Justin can call back.
+  // A number typed anywhere in the chat is saved so the garage can call back.
   const phone = !conversation.contactPhone && findPhone(text)
   if (phone) {
     await setContact(conversation.id, { phone })
@@ -98,9 +98,9 @@ async function postMessage(req, res) {
       const reply = await askAI(toHistory(await getMessages(conversation.id)))
       await addMessage(conversation.id, 'ai', reply)
     } catch (error) {
-      // e.g. the free tier's daily limit is used up: the visitor's message is saved and Justin replies.
+      // e.g. the free tier's daily limit is used up: the visitor's message is saved and the garage replies.
       console.error('Chat AI error:', error?.status ?? '', error?.message ?? error)
-      notice = "The assistant couldn't answer just now. Justin will see your message and reply here."
+      notice = "The assistant couldn't answer just now. Jkmechanic will see your message and reply here."
     }
   }
 

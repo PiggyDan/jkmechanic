@@ -14,11 +14,11 @@ export const quickAnswers = [
   },
   {
     question: 'Can you import parts?',
-    answer: 'Yes. If a part is not available in Mongolia, Justin can import it for you. Send your vehicle details and the part you need through the [general request form](/#contact), or call [+976 8885 6529](tel:+97688856529).',
+    answer: 'Yes. If a part is not available in Mongolia, Jkmechanic can import it for you. Send your vehicle details and the part you need through the [general request form](/#contact), or call [+976 8885 6529](tel:+97688856529).',
   },
   {
     question: 'I want to book a repair',
-    answer: 'Great! Pick a day and time in the [repair booking form](/services/vehicle-repair-shop#booking). Justin will call you to confirm.',
+    answer: 'Great! Pick a day and time in the [repair booking form](/services/vehicle-repair-shop#booking). Jkmechanic will call you to confirm.',
   },
 ]
 
