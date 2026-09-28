@@ -7,6 +7,8 @@ import AppointmentPicker from '../components/AppointmentPicker'
 import TimeSelect from '../components/TimeSelect'
 import BuySellPage from './BuySellPage'
 import { bookingPhoto, servicePhoto } from '../data/brand'
+import { ClipboardList, MessageCircle } from 'lucide-react'
+import { openChat } from '../lib/chat'
 
 const t = {
   back: 'Back to home',
@@ -16,7 +18,8 @@ const t = {
   booking: 'Booking',
   clearProcess: 'A clear process, without the confusion.',
   needThis: 'Need this service?',
-  contact: 'Contact Jkmechanic Shop',
+  chat: 'Chat with us',
+  form: 'Send booking request',
   sendRequest: 'Send booking request',
   details: 'What this includes',
   why: 'Why it matters',
@@ -281,12 +284,14 @@ function ServicePage({ slug }) {
             <span className="eyebrow dark">{t.needThis}</span>
             <h3>{t.needServiceText}</h3>
           </div>
-          <a
-            className="primary-button"
-            href="#booking"
-          >
-            {t.contact}
-          </a>
+          <div className="detail-cta-actions">
+            <button type="button" className="detail-cta-chat" onClick={openChat}>
+              <MessageCircle size={18} aria-hidden="true" /> {t.chat}
+            </button>
+            <a className="primary-button" href="#booking">
+              <ClipboardList size={18} aria-hidden="true" /> {t.form}
+            </a>
+          </div>
         </section>
       </div>
     </div>

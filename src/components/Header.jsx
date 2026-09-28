@@ -24,7 +24,7 @@ export default function Header() {
 
       <div className="header-actions">
         <ThemeToggle />
-        <button type="button" className="messenger-button" onClick={openChat} aria-label="Chat with the Garage 84 assistant">
+        <button type="button" className="messenger-button" onClick={openChat} aria-label="Chat with Jkmechanic">
           <MessageCircle size={18} className="messenger-icon" aria-hidden="true" />
           Chat
         </button>

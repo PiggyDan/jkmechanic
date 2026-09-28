@@ -439,7 +439,12 @@ img.brand-logo-full {
     border-radius: 18px;
   }
 
-  .detail-cta .primary-button {
+  .detail-cta-actions {
+    flex-direction: column;
+  }
+
+  .detail-cta .primary-button,
+  .detail-cta-chat {
     width: 100%;
   }
 }
@@ -460,5 +465,38 @@ img.brand-logo-full {
 }
 
 .header-call:hover {
+  background: var(--card);
+}
+
+/* Service page footer: choose chat or the booking form. */
+.detail-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.detail-cta-actions .primary-button,
+.detail-cta-chat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.detail-cta-chat {
+  padding: 0.95rem 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--heading);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.detail-cta-chat:hover {
   background: var(--card);
 }

@@ -10,7 +10,7 @@ const ID_KEY = 'jk-chat-id'
 const SEEN_KEY = 'jk-chat-seen'
 const OPEN_POLL_MS = 4000
 const CLOSED_POLL_MS = 30000
-const GREETING = "Hi! I'm the Garage 84 assistant, and the Jkmechanic team can also reply here. Ask about repairs, parts, storage, directions or booking. Сайн байна уу! Монголоор асууж болно."
+const GREETING = "Hi! 👋 Welcome to Jkmechanic!\n\nHow can we help you today? Feel free to ask us about repairs, parts, storage, directions, or booking. 😊"
 const SUGGESTIONS = quickAnswers.map((item) => item.question)
 
 // Links the assistant may produce: internal pages, tel:, mailto:, Messenger and Google Maps.
