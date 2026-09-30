@@ -1,6 +1,6 @@
 One photo per service, named after the service (replaces the placeholder photo on that service's page):
 
-- `vehicle-repair-shop.jpg`
+- `vehicle-checkup.jpg`
 - `vehicle-rental.jpg` (your rental vehicle)
 - `buy-sell-car.jpg`
 - `driver-transfers.jpg` (your car for transfers and trips)

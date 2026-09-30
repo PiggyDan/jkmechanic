@@ -58,9 +58,9 @@ export const services = [
       'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
   },
   {
-    slug: 'vehicle-repair-shop',
+    slug: 'vehicle-checkup',
     accent: '02',
-    title: 'Vehicle repair shop',
+    title: 'Vehicle checkup',
     summary:
       'A practical workshop service that checks the car, test drives it, and tells you exactly what needs to change.',
     intro:

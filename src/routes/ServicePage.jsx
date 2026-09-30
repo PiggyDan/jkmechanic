@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import { services } from '../data/services'
 import Header from '../components/Header'
 import { submitRequest } from '../lib/submitRequest'
@@ -301,6 +301,9 @@ function ServicePage({ slug }) {
 // Keyed by slug so the form state resets when moving between services.
 function ServicePageRoute() {
   const { slug } = useParams()
+  const { hash } = useLocation()
+  // Old address, kept working for links shared before the rename.
+  if (slug === 'vehicle-repair-shop') return <Navigate to={`/services/vehicle-checkup${hash}`} replace />
   // Buying/selling has its own page with pricing and a buy/sell form.
   if (slug === 'buy-sell-car') return <BuySellPage key={slug} />
   return <ServicePage key={slug} slug={slug} />

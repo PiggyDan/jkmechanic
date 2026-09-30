@@ -6,7 +6,7 @@ import { HOURS_TEXT } from './schedule.js'
 export const quickAnswers = [
   {
     question: 'When are you open?',
-    answer: `We're open ${HOURS_TEXT} (closed on weekends). You can [book a time](/services/vehicle-repair-shop#booking) online, or call [+976 8885 6529](tel:+97688856529).`,
+    answer: `We're open ${HOURS_TEXT} (closed on weekends). You can [book a time](/services/vehicle-checkup#booking) online, or call [+976 8885 6529](tel:+97688856529).`,
   },
   {
     question: 'Where is the garage?',
@@ -18,7 +18,7 @@ export const quickAnswers = [
   },
   {
     question: 'I want to book a repair',
-    answer: 'Great! Pick a day and time in the [repair booking form](/services/vehicle-repair-shop#booking). Jkmechanic will call you to confirm.',
+    answer: 'Great! Pick a day and time in the [repair booking form](/services/vehicle-checkup#booking). Jkmechanic will call you to confirm.',
   },
 ]
 

@@ -5,7 +5,7 @@ import { services } from '../data/services'
 import './book-button.css'
 
 const icons = {
-  'vehicle-repair-shop': Wrench,
+  'vehicle-checkup': Wrench,
   'vehicle-rental': KeyRound,
   'buy-sell-car': Repeat,
   'driver-transfers': PlaneLanding,
@@ -13,7 +13,7 @@ const icons = {
 }
 
 // Repairs are the main business, so they go first in the picker.
-const ordered = [...services].sort((a, b) => (b.slug === 'vehicle-repair-shop') - (a.slug === 'vehicle-repair-shop'))
+const ordered = [...services].sort((a, b) => (b.slug === 'vehicle-checkup') - (a.slug === 'vehicle-checkup'))
 
 // A "Book" button that asks which service first, then opens that service's booking form.
 export default function BookButton({ className, children = 'Book appointment' }) {
