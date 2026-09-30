@@ -81,3 +81,19 @@
   color: var(--muted);
   font-size: 0.8rem;
 }
+
+.money-converted {
+  color: var(--heading);
+  font-weight: 700;
+}
+
+.money-rate {
+  margin-top: -4px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.money-rate a {
+  color: inherit;
+}

@@ -9,6 +9,7 @@ import { submitRequest } from '../lib/submitRequest'
 import { galleryPhotos } from '../data/gallery'
 import MoneyField from '../components/MoneyField'
 import { describeAmount } from '../lib/money'
+import { useExchangeRate } from '../lib/useExchangeRate'
 import {
   SELL_COMMISSION, buyChecks, buyFields, buySteps, priceFactors as sharedPriceFactors, reasons as sharedReasons, sellFields,
   sellSteps as sharedSellSteps,
@@ -31,6 +32,7 @@ function BuySellPage() {
   const [goal, setGoal] = useState('sell')
   const [form, setForm] = useState(emptyForm)
   const [status, setStatus] = useState({ state: 'idle', error: '' })
+  const rate = useExchangeRate()
   const location = useLocation()
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function BuySellPage() {
         website: form.website,
         fields: [...goalFields, { name: 'notes', label: 'Notes' }].map((field) => ({
           label: field.label,
-          value: field.type === 'money' ? describeAmount(form[field.name], currencyOf(field.name)) : form[field.name] || '',
+          value: field.type === 'money' ? describeAmount(form[field.name], currencyOf(field.name), rate?.usdToMnt) : form[field.name] || '',
         })),
       })
       setForm(emptyForm)
