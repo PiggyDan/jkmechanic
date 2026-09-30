@@ -16,10 +16,11 @@
   font-weight: 400;
 }
 
-.money-row {
+.money-head {
   display: flex;
-  gap: 8px;
-  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .money-input {
@@ -30,7 +31,7 @@
 
 .money-field .money-input input {
   width: 100%;
-  padding-right: 5.6rem;
+  padding-right: 6.2rem;
 }
 
 .money-unit {
@@ -47,16 +48,17 @@
 .money-currency {
   display: flex;
   flex-shrink: 0;
-  padding: 3px;
+  padding: 2px;
   border: 1px solid var(--line, rgba(148, 163, 184, 0.18));
-  border-radius: 14px;
+  border-radius: 999px;
   background: var(--field);
 }
 
 .money-currency button {
-  padding: 0 10px;
+  padding: 4px 12px;
   border: 0;
-  border-radius: 11px;
+  border-radius: 999px;
+  line-height: 1.2;
   background: transparent;
   color: var(--muted);
   font: inherit;
