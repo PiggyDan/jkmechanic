@@ -93,7 +93,7 @@ export const services = [
         description: 'We explain what needs to change first, what can wait, and what matters most for safety and reliability.',
       },
     ],
-    formTitle: 'Book a repair check',
+    formTitle: 'Book a checkup',
     // Shows the day/time picker; 'required' or 'optional'.
     appointment: 'required',
     formIntro: 'Tell us what vehicle you need checked and when you are available.',
