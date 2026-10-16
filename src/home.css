@@ -636,6 +636,10 @@
 }
 
 .home-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
   grid-column: 1 / -1;
   margin: 0;
   padding-top: 20px;

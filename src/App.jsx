@@ -316,7 +316,10 @@ function App() {
           <Link to="/about">About us</Link>
           <a href="#contact">Book a visit</a>
         </div>
-        <p className="home-footer-legal">© {new Date().getFullYear()} JKMechanic Shop. All rights reserved.</p>
+        <p className="home-footer-legal">
+          <span>© {new Date().getFullYear()} JKMechanic Shop. All rights reserved.</span>
+          <a href="https://daniel70.netlify.app" target="_blank" rel="noopener noreferrer">Powered by Daniel Knight</a>
+        </p>
       </footer>
     </div>
   )
