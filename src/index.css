@@ -3,9 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: #e2e8f0;
-  background:
-    radial-gradient(circle at top, rgba(249, 115, 22, 0.18), transparent 32%),
-    linear-gradient(180deg, #020817 0%, #0f172a 100%);
+  background: #0c0e0b;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -67,5 +65,5 @@ p {
   --field: #fff;
   --shadow: rgba(36, 48, 68, .08);
   color: var(--text);
-  background: radial-gradient(circle at top, #ffedd5, transparent 36%), #f5f6f8;
+  background: #f5f6f8;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { MotionConfig } from 'motion/react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   ArrowUpRight, Clock, Mail, MapPin, MessageCircle, Navigation, Package, Phone, Star, Truck, Warehouse, Wrench,
@@ -9,14 +10,13 @@ import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, MAPS_URL, featuredReviews } from '.
 import { submitRequest } from './lib/submitRequest'
 import { HOURS_SHORT } from './data/schedule'
 import Header from './components/Header'
-import BookButton from './components/BookButton'
 import Gallery from './components/Gallery'
 import CustomerReviews from './components/CustomerReviews'
 import AppointmentPicker from './components/AppointmentPicker'
 import { galleryPhotos } from './data/gallery'
 import BrandMark from './components/BrandMark'
-import heroTruck from './assets/hero-truck.webp'
-import heroTruckRed from './assets/hero-truck-red.webp'
+import AssemblyExperience from './experience/AssemblyExperience'
+import Reveal from './components/Reveal'
 
 
 const MAP_EMBED = 'https://maps.google.com/maps?q=47.9290974,107.1572345&z=15&output=embed'
@@ -99,32 +99,19 @@ function App() {
   }
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="luxury-page home">
       <Header />
 
       <main>
-        <section className="home-hero reveal" aria-labelledby="home-title">
-          <div className="home-hero-copy">
-            <span className="home-kicker">Jkmechanic Shop · Gachuurt, Ulaanbaatar</span>
-            <h1 id="home-title">We fix cars in Gachuurt.</h1>
-            <p>
-              Small garage, just outside UB. Oil changes, brakes, suspension, engines.
-              Justin will look at your vehicle and tell you straight what it needs.
-            </p>
-            <p>Cars, trucks and 4x4s all welcome.</p>
-            <div className="home-actions">
-              <BookButton className="primary-button">Book a visit</BookButton>
-              <a className="primary-button home-call-button" href="tel:+97688856529" aria-label="Call +976 8885 6529"><Phone size={18} /> Call us</a>
-            </div>
-          </div>
+        <AssemblyExperience />
 
-          <img className="home-hero-truck home-hero-truck-night" src={heroTruck} alt="ZIL truck" width="441" height="242" />
-          <img className="home-hero-truck home-hero-truck-day" src={heroTruckRed} alt="Red ZIL truck" width="441" height="242" />
-
+        <div className="home-inner">
+        <Reveal as="section" className="home-proof" aria-label="Why Garage 84">
           <dl className="home-facts">
             <a className="home-fact" href="#reviews">
               <dt>Google rating</dt>
-              <dd><strong>{GOOGLE_RATING}</strong> <Stars size={14} /> <small>{GOOGLE_REVIEW_COUNT} reviews</small></dd>
+              <dd><strong>{GOOGLE_RATING}</strong> <Stars size={13} /> <small>{GOOGLE_REVIEW_COUNT} reviews</small></dd>
             </a>
             <div className="home-fact">
               <dt>Experience</dt>
@@ -135,19 +122,18 @@ function App() {
               <dd><strong>{HOURS_SHORT}</strong> <small>Closed on weekends</small></dd>
             </div>
           </dl>
-        </section>
+          <div className="home-strengths">
+            {strengths.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="home-strength">
+                <Icon size={20} aria-hidden="true" />
+                <h2>{title}</h2>
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
 
-        <section className="home-strengths reveal" aria-label="What we offer">
-          {strengths.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="home-strength">
-              <Icon size={22} aria-hidden="true" />
-              <h2>{title}</h2>
-              <p>{text}</p>
-            </div>
-          ))}
-        </section>
-
-        <section id="services" className="home-section reveal" aria-labelledby="services-title">
+        <Reveal as="section" id="services" className="home-section" aria-labelledby="services-title">
           <div className="home-section-head">
             <span className="home-kicker">Services</span>
             <h2 id="services-title">What can we help with?</h2>
@@ -162,9 +148,9 @@ function App() {
               </Link>
             ))}
           </div>
-        </section>
+        </Reveal>
 
-        <section className="home-band reveal" aria-labelledby="travel-title">
+        <Reveal as="section" className="home-band" aria-labelledby="travel-title">
           <div>
             <span className="home-kicker">Overlanders welcome</span>
             <h2 id="travel-title">Driving across Mongolia? Stop at Garage 84.</h2>
@@ -177,10 +163,10 @@ function App() {
           <ul>
             {travellerPoints.map((point) => <li key={point}>{point}</li>)}
           </ul>
-        </section>
+        </Reveal>
 
         {galleryPhotos.length > 0 && (
-          <section id="gallery" className="home-section reveal" aria-labelledby="gallery-title">
+          <Reveal as="section" id="gallery" className="home-section" aria-labelledby="gallery-title">
             <div className="home-section-head home-section-head-split">
               <div>
                 <span className="home-kicker">Inside Garage 84</span>
@@ -189,10 +175,10 @@ function App() {
               <p>Photos from the workshop in Gachuurt.</p>
             </div>
             <Gallery />
-          </section>
+          </Reveal>
         )}
 
-        <section id="reviews" className="home-section home-reviews reveal" aria-labelledby="reviews-title">
+        <Reveal as="section" id="reviews" className="home-section home-reviews" aria-labelledby="reviews-title">
           <div className="home-reviews-score">
             <span className="home-kicker">Reviews</span>
             <h2 id="reviews-title">{GOOGLE_RATING}</h2>
@@ -211,9 +197,9 @@ function App() {
             ))}
           </div>
           <CustomerReviews />
-        </section>
+        </Reveal>
 
-        <section id="contact" className="home-section home-contact reveal" aria-labelledby="contact-title">
+        <Reveal as="section" id="contact" className="home-section home-contact" aria-labelledby="contact-title">
           <div className="home-visit">
             <span className="home-kicker">Book a visit</span>
             <h2 id="contact-title">Tell us about the vehicle before you arrive.</h2>
@@ -288,7 +274,8 @@ function App() {
               </button>
             </form>
           )}
-        </section>
+        </Reveal>
+        </div>
       </main>
 
       <footer className="home-footer">
@@ -322,6 +309,7 @@ function App() {
         </p>
       </footer>
     </div>
+    </MotionConfig>
   )
 }
 
